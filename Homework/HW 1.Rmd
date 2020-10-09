@@ -1,19 +1,21 @@
 ---
-title: "HW #1"
+title: "Computing HW #1 Group 5"
 output: html_notebook
 ---
 
-This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
-
-Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Cmd+Shift+Enter*. 
-
+1.
 ```{r}
-plot(cars)
+170166719 %% 31079
 ```
 
-Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Cmd+Option+I*.
+10.
+```{r}
+letter_file = function(file_name, file_type)
+  {
+  alphabet = LETTERS[1:26]
+  write.csv(alphabet, file = paste(file_name, file_type, sep="."))
+}
 
-When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Cmd+Shift+K* to preview the HTML file). 
-
-The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
-
+letter_file("letters", "csv")
+letter_file("letters", "txt")
+```
