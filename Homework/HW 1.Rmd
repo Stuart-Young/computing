@@ -208,8 +208,6 @@ geometric_mean = function(x,y) {
   mean = sqrt((x*y))
   return(mean)
 }
-
-geometric_mean(5,3)
 ```
 
 15. 
@@ -230,6 +228,26 @@ string_length = function(s1, s2) {
     }
   else {
     return("Error")
+  }
+}
+```
+
+
+16.
+```{r}
+character = function(s) {
+  for (i in 1:nchar(s)) {
+    print(s)
+  }
+}
+```
+
+
+17.
+```{r}
+reverse_nat = function(x) {
+  for (i in x:1){
+    print(i)
   }
 }
 ```
