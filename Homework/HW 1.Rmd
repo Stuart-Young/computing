@@ -350,8 +350,37 @@ sum_squares_two_largest_numbers(20,10,35)
 
 22. TODO
 ```{r}
-
+unique_real_root_cubic <- function(a,b,c)
+{
+  p <- (3*b-a^2)/3
+  cat("p=", p, " ")
+  
+  q <- (2*a^3)/27 - (a*b/3) + c
+  cat("q=", q, " ")
+  
+  D <- (p/3)^3+(q/2)^2
+  cat("D=", D, " ")
+  
+  n_root <- function(x,n){
+    sign(x) * abs(x)^(1/n)
+  }
+  
+  if(D>0)
+  {
+    x <- -(a/3) + n_root(-(q/2)+sqrt(D),3) + n_root(-(q/2)-sqrt(D),3)
+  } else
+  {
+    print("Error: There is no unique real solution! Discriminant is not positive!")
+  }
+  cat("The unique real root of this cubic equation is", x, " ")
+  return(x)
+}
 ```
+
+```{r}
+unique_real_root_cubic(3,5,7)
+```
+
 
 23. TODO
 ```{r}
