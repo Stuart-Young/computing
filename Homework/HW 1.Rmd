@@ -23,11 +23,13 @@ exp_quick = function(n) {
   return(result)
 }
 
+print("Values using the sum:")
 exp_sum(10)
 exp_sum(20)
 exp_sum(30)
 exp_sum(40)
 
+print("Values using the quick formula:")
 exp_quick(10)
 exp_quick(20)
 exp_quick(30)
