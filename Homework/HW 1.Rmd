@@ -264,19 +264,78 @@ is_divisible <- function(x,y)
     return(FALSE)
   }
 }
+```
+
+```{r}
 is_divisible(3,4)
 ```
-
-19. TODO
 ```{r}
+is_divisible(8,4)
+```
+19.
+```{r}
+# Quersumme in german
+sum_of_digits <- function(n)
+{
+  vector_of_digits <- c()
+  while (n!=0) {
+    if (n%%10 == 0) 
+    {
+      n <- n/10
+    }
+    else
+    {
+      vector_of_digits <- c(vector_of_digits, n%%10)
+      n <- n- n%%10
+    }
+  }
+  return(sum(vector_of_digits))
+}
 
 ```
-
-20. TODO
 ```{r}
-
+sum_of_digits(121)
+```
+```{r}
+sum_of_digits(345)
+```
+```{r}
+sum_of_digits(655)
 ```
 
+20. 
+```{r}
+number_of_digits <- function(n_vec)
+{
+  vector_of_digits <- c()
+  
+  for(i in 1:length(n_vec))
+  {
+    while (n_vec[i]!=0) {
+      if (n_vec[i]%%10 == 0) 
+      {
+        n_vec[i] <- n_vec[i]/10
+      }
+      else
+      {
+        vector_of_digits <- c(vector_of_digits, n_vec[i]%%10)
+        n_vec[i] <- n_vec[i]- n_vec[i]%%10
+      }
+    }
+  }
+  
+  return(length(vector_of_digits))
+
+}  
+```
+
+```{r}
+number_of_digits(123)
+```
+
+```{r}
+number_of_digits(c(1,23,45,678))
+```
 
 21.
 ```{r}
@@ -328,6 +387,27 @@ bin_coefficient(5000,2000)
 # c?
 ```
 
-24. TODO
+24.
+
 ```{r}
+# Try gamma() for n=200
+gamma(200)
+```
+```{r}
+# implementing log. gamma function
+rho_n <- function(n)
+{
+  return(exp(lgamma((n-1)/2))/(exp(lgamma(1/2))*exp(lgamma((n-2)/2))))
+}
+```
+
+```{r}
+rho_n(200)
+```
+
+```{r}
+n = 320
+rho_n(n) / sqrt(n)
+
+#rho_n(n)/sqrt(n) tends to ~0.3973811
 ```
