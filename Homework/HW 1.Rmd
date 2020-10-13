@@ -519,11 +519,13 @@ log_binomial(5000, 2000)
 # Try gamma() for n=200
 gamma(200)
 ```
+This approach fails because the value is too large for R to compute and store in base 10. 
+
 ```{r}
 # implementing log. gamma function
 rho_n <- function(n)
 {
-  return(exp(lgamma((n-1)/2))/(exp(lgamma(1/2))*exp(lgamma((n-2)/2))))
+  return(exp(lgamma((n-1)/2) - (lgamma(1/2) + lgamma((n-2)/ 2))))
 }
 ```
 
@@ -532,8 +534,10 @@ rho_n(200)
 ```
 
 ```{r}
-n = 320
-rho_n(n) / sqrt(n)
+rho_n(2000) / sqrt(2000)
+rho_n(4000) / sqrt(4000)
+rho_n(6000) / sqrt(6000)
+rho_n(10000) / sqrt(10000)
 
-#rho_n(n)/sqrt(n) tends to ~0.3973811
+#rho_n(n)/sqrt(n) tends to ~0.3988
 ```
