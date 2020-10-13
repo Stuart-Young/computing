@@ -23,19 +23,21 @@ exp_quick = function(n) {
   return(result)
 }
 
-print("Values using the sum:")
+writeLines("Values using the sum:")
 exp_sum(10)
 exp_sum(20)
 exp_sum(30)
 exp_sum(40)
 
-print("Values using the quick formula:")
+writeLines("Values using the quick formula:")
 exp_quick(10)
 exp_quick(20)
 exp_quick(30)
 exp_quick(40)
 
+writeLines("Quick formula results for n=1 to n=100")
 exp_quick_vec = exp_quick(c(1:100))
+exp_quick_vec
 ```
 
 
@@ -52,17 +54,22 @@ lin_quick = function(n) {
   return(result)
 }
 
+writeLines("Values using the sum:")
 lin_sum(100)
 lin_sum(200)
 lin_sum(400)
 lin_sum(800)
 
+writeLines("Values using the quick formula")
 lin_quick(100)
 lin_quick(200)
 lin_quick(400)
 lin_quick(800)
 
+
+writeLines("Quick formula results for n=1 to n=100")
 lin_quick_vec = lin_quick(c(1:100))
+lin_quick_vec
 ```
 
 
@@ -79,17 +86,21 @@ sq_quick = function(n) {
   return(result)
 }
 
+writeLines("Values using the sum:")
 sq_sum(100)
 sq_sum(200)
 sq_sum(400)
 sq_sum(800)
 
+writeLines("Values using the quick formula:")
 sq_quick(100)
 sq_quick(200)
 sq_quick(400)
 sq_quick(800)
 
+writeLines("Quick formula results for n=1 to n=100")
 sq_quick_vec = sq_quick(c(1:100))
+sq_quick_vec
 ```
 
 5.
@@ -105,17 +116,27 @@ log_quick = function(n) {
   return(result)
 }
 
+writeLines("Values using the sum:")
 log_sum(100)
 log_sum(200)
 log_sum(400)
 log_sum(800)
 
+writeLines("Values using the quick formula:")
 log_quick(100)
 log_quick(200)
 log_quick(400)
 log_quick(800)
 
+writeLines("Quick formula results for n=1 to n=100")
 log_quick_vec = log_quick(c(1:100))
+log_quick_vec
+```
+
+```{r}
+log_sum((10^5)) - log((10^5))
+log_sum((10^6)) - log((10^6))
+log_sum((10^7)) - log((10^7))
 ```
 
 The limit of s_n - log(n) is Euler's constant (gamma), approx equal to 0.5772.
@@ -124,14 +145,18 @@ The limit of s_n - log(n) is Euler's constant (gamma), approx equal to 0.5772.
 
 6. 
 ```{r}
-rep(0:4, each = 5)
+v = rep(0:4, each = 5)
+v
 
-rep(seq(1,5, by=1), 5)
+v2 = rep(seq(1,5, by=1), 5)
+v2
 ```
 
 
 7. 
 ```{r}
+v = rep(seq(1,5), times=5) + rep(seq(0,4), each=5)
+v
 ```
 
 
@@ -141,6 +166,8 @@ asc_func = function(n) {
   value = rep(0:n, 0:n)
   return(value)
 }
+
+asc_func(5)
 ```
 
 
@@ -150,7 +177,11 @@ numbers = c(3,5,8,10,12)
 dump("numbers", file = "numbers.R")
 rm(numbers)
 ls()
+```
+
+```{r}
 source("numbers.R")
+numbers
 ```
 
 
@@ -169,7 +200,7 @@ letter_file("letters", "txt")
 
 11. TODO
 ```{r}
-plot(x, 3*x+2, xlim=range(-1:3), ylim=range(0:10), type="l")
+
 ```
 
 12.
@@ -179,12 +210,16 @@ sign = function(number) {
     return ("Zero; Neither Positive nor Negative")
   }
   else if (number > 0){
-    return("Positive")
+    return(TRUE)
   } 
     else {
-      return("Negative")
+      return(FALSE)
   }
 }
+
+sign(1)
+sign(0)
+sign(-1)
 ```
 
 
@@ -206,10 +241,30 @@ pi_abs = function(number) {
 
 14.
 ```{r}
-geometric_mean = function(x,y) {
-  mean = sqrt((x*y))
-  return(mean)
+means = function(x,y,type) {
+  if (type == "geometric"){
+    if (x*y >= 0){
+      mean = sqrt((x*y))
+      return(mean)
+    }
+    else {
+      return("Error; input values must have the same sign.")
+    }
+  }
+  
+  if (type == "harmonic"){
+    if (x > 0 && y > 0 ){
+      mean = 2/ ((1/x) + (1/y))
+      return(mean)
+    }
+    else {
+      return("Error; the harmonic mean is undefined if either value is 0 or negative")
+    }
+  }
 }
+
+means(0,4,"harmonic")
+means(2,4,"geometric")
 ```
 
 15. 
@@ -232,6 +287,10 @@ string_length = function(s1, s2) {
     return("Error")
   }
 }
+
+string_length("foo", "foos")
+string_length("3455", "2")
+string_length("1", "1")
 ```
 
 
@@ -239,9 +298,11 @@ string_length = function(s1, s2) {
 ```{r}
 character = function(s) {
   for (i in 1:nchar(s)) {
-    print(s)
+    writeLines(s)
   }
 }
+
+character("computing")
 ```
 
 
@@ -252,6 +313,8 @@ reverse_nat = function(x) {
     print(i)
   }
 }
+
+reverse_nat(10)
 ```
 
 18.
@@ -274,9 +337,10 @@ is_divisible(3,4)
 ```{r}
 is_divisible(8,4)
 ```
+
+
 19.
 ```{r}
-# Quersumme in german
 sum_of_digits <- function(n)
 {
   vector_of_digits <- c()
@@ -304,6 +368,7 @@ sum_of_digits(345)
 ```{r}
 sum_of_digits(655)
 ```
+
 
 20. 
 ```{r}
@@ -339,6 +404,21 @@ number_of_digits(123)
 number_of_digits(c(1,23,45,678))
 ```
 
+20. (alternative)
+```{r}
+digit_count = function(x) {
+  counter = 0 
+  for (i in x) {
+    counter = counter + nchar(i)
+  }
+  return(counter)
+}
+
+digit_count(13)
+digit_count(c(1,234,4564))
+```
+
+
 21.
 ```{r}
 sum_squares_two_largest_numbers <- function(x1,x2,x3)
@@ -350,7 +430,7 @@ sum_squares_two_largest_numbers <- function(x1,x2,x3)
 sum_squares_two_largest_numbers(20,10,35)
 ```
 
-22. TODO
+22.
 ```{r}
 unique_real_root_cubic <- function(a,b,c)
 {
@@ -384,13 +464,12 @@ unique_real_root_cubic(3,5,7)
 ```
 
 
-23. TODO
+23. 
 ```{r}
 # a 
 factorial <- function(n)
 {
   fact <- prod(1:n)
-  
   return(fact)
 }
 
@@ -415,7 +494,23 @@ bin_coefficient(50,20)
 
 bin_coefficient(5000,2000)
 
-# c?
+
+# c
+log_factorial = function(n) {
+  counter = 0
+  for (i in 2:n){
+    counter = counter + log(i)
+  }
+  return(counter)
+}
+
+log_binomial = function(n, k) {
+  return(exp(sum(log_factorial(n), -log_factorial(k), -log_factorial(n-k))))
+}
+
+log_binomial(4,2)
+log_binomial(50,20)
+log_binomial(5000, 2000)
 ```
 
 24.
