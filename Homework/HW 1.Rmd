@@ -198,9 +198,13 @@ letter_file("letters", "txt")
 ```
 
 
-11. TODO
+11. 
 ```{r}
+f = function(x){
+  (x <= 3)*((3*x)+2)+(x > 3)*((2*x) - (0.5*x^2))
+  }
 
+curve(f, from=0, to=6, type='p')
 ```
 
 12.
@@ -236,6 +240,9 @@ pi_abs = function(number) {
       return("Less than Pi")
   }
 }
+
+pi_abs(pi)
+pi_abs(0)
 ```
 
 
