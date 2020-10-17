@@ -1,0 +1,165 @@
+---
+title: "Computing Group 5 Homework 2"
+output: html_notebook
+---
+
+Exercises 25-30, 32-36, 38-47
+
+
+32.
+```{r}
+proper_divisors = function(x){
+  candidates = seq_len(x-1)
+  candidates[x%%candidates == 0]
+}
+
+perfect_num = function(x) {
+  sum_divisors = sum(proper_divisors(x))
+  if (sum_divisors == x){
+    return(TRUE)
+  }
+  else {
+    return(FALSE)
+  }
+}
+
+#The first four perfect numbers
+for (i in 1:9000){
+  if (perfect_num(i)){
+    print(i)
+  }
+}
+```
+
+
+33.
+```{r}
+divisors_count = function(x){
+  candidates = seq_len(x)
+  return(length(candidates[x%%candidates == 0]))
+}
+
+divisors_count_vec = Vectorize(divisors_count)
+
+highly_composite = function(x) {
+  x_divisors = divisors_count(x)
+  if (x_divisors > max(divisors_count_vec(1:x-1))){
+    return(TRUE)
+  }
+    else {
+      return(FALSE)
+    }
+}
+
+
+#The first 20 highly composite numbers
+if (highly_composite(1)){
+    print(1)
+  }
+
+for (i in 2:7561) {
+  if (i%%2 != 0){ #odd integers > 1 can't be highly composite, so don't consider them
+    next
+  }
+  
+  if (highly_composite(i)){
+    print(i)
+  }
+}
+
+```
+
+34.
+```{r}
+collatz_step = function(n){
+  if (n%%2 == 0){
+    n = n/2
+  }
+  else {
+    n = (3*n)+1
+  }
+}
+
+collatz = function(n_0) {
+  n_i = n_0
+  while (n_0 != 1) {
+    n_0 = collatz_step(n_0)
+    n_i = c(n_i, n_0)
+  }
+  steps = length(n_i)
+  return(steps)
+}
+
+
+results = sapply(1:100000, collatz)
+
+most_steps = max(results)
+most_steps_n = which.max(results)
+
+writeLines(paste("The most steps is for n=", most_steps_n, ", which took", most_steps, "steps"))
+```
+
+
+35.
+```{r}
+binary_rep = function(x) {
+  binary = c()
+  n = x
+  i = 1
+  
+  while (n > 0) {
+      r = as.logical(n%%2^i)
+      binary = c(r, binary)
+      n = n - r*2^(i-1)
+      i = i+1
+  }
+  return(as.integer(binary))
+}
+
+binary_rep(6)
+
+binary_inv = function(x){
+  base = 2^((length(x)-1):0)
+  return(sum(x*base))
+}
+
+binary_inv(c(1,0,0))
+
+
+```
+
+
+38.
+```{r}
+pascal = function(n){
+  line = c(1)
+  
+  if (n==0){
+    return(line)
+  }
+  
+  else {
+    for (i in 1:n){
+      line = c(0, line) + c(line, 0)
+    }
+    return(line)
+  }
+}
+
+for (i in 0:10){
+  print(pascal(i))
+}
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
