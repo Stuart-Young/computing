@@ -5,6 +5,39 @@ output: html_notebook
 
 Exercises 25-30, 32-36, 38-47
 
+25.
+
+```{r}
+logstar <- function (x) {
+  
+  if (x<1) {0} 
+    else {1 + logstar(log(x))}
+}
+
+logstar(123)
+
+```
+
+26.
+
+```{r}
+
+gcd <- function (a, b) {
+  
+  if(a%%b == 0) {b}
+  
+  else {gcd(b, a%%b)}
+  
+}
+
+gcd(5, 3)
+
+
+```
+
+
+
+
 
 32.
 ```{r}
