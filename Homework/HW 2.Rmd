@@ -86,7 +86,7 @@ collatz = function(n_0) {
     n_0 = collatz_step(n_0)
     n_i = c(n_i, n_0)
   }
-  steps = length(n_i)
+  steps = length(n_i) - 1 #exclude n_0, as it does not represent a step
   return(steps)
 }
 
@@ -149,14 +149,74 @@ pascal = function(n){
 for (i in 0:10){
   print(pascal(i))
 }
-
-
 ```
 
 
 
+39. a.
+```{r}
+binomial = function(s_0, N, U, D) {
+  base = list()
+  for (i in 0:N) {
+    j = seq(1:(i+1))-1
+    base[[i+1]] = s_0 * U^(j) * D^(i-j)
+  }
+  
+  return(base)
+}
 
 
+binomial(1,3,2,0.5)
+```
+
+39. b.
+```{r}
+seq_convert = function(a) {
+  return(seq(1:(a+1))-1)
+}
+
+binomial_apply = function(s_0, N, U, D) {
+  returns = lapply(
+    lapply(as.list(seq(1:(N+1))-1), seq_convert), 
+    function(i) s_0*U^i*D^(max(i)-i))
+  return(returns)
+}
+
+
+binomial_apply(1,3,2,0.5)
+```
+
+c.
+```{r}
+#Efficiency comparison for a small example
+start.time = Sys.time()
+invisible(binomial(1,3,2,0.5))
+end.time = Sys.time()
+time.taken = end.time - start.time
+time.taken
+
+start.time = Sys.time()
+invisible(binomial_apply(1,3,2,0.5))
+end.time = Sys.time()
+time.taken = end.time - start.time
+time.taken
+
+
+#Efficiency comparison for a large example
+start.time = Sys.time()
+invisible(binomial(1,3000,2,0.5))
+end.time = Sys.time()
+time.taken = end.time - start.time
+time.taken
+
+start.time = Sys.time()
+invisible(binomial_apply(1,3000,2,0.5))
+end.time = Sys.time()
+time.taken = end.time - start.time
+time.taken
+```
+
+c. Considering the execution efficiency of each above, the version using apply is typically quicker, though there is some variability between trials. The apply version is a bit easier to read and perhaps reason about to break down the function into its component steps. But, in this example where only one dimension is being iterated over, the 'for' version is fairly straightforward; the difference is probably more pronounced in more complex functions.
 
 
 

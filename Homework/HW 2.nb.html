@@ -1755,20 +1755,29 @@ summary {
 </ol>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZm9yIChpIGluIDE6OTAwMCl7XG4gIGlmIChwZXJmZWN0X251bShpKSA9PSBUUlVFKXtcbiAgICBwcmludChpKVxuICB9XG59XG5cbmBgYCJ9 -->
-<pre class="r"><code>for (i in 1:9000){
-  if (perfect_num(i) == TRUE){
-    print(i)
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucHJvcGVyX2Rpdmlzb3JzID0gZnVuY3Rpb24oeCl7XG4gIGNhbmRpZGF0ZXMgPSBzZXFfbGVuKHgtMSlcbiAgY2FuZGlkYXRlc1t4JSVjYW5kaWRhdGVzID09IDBdXG59XG5cbnBlcmZlY3RfbnVtID0gZnVuY3Rpb24oeCkge1xuICBzdW1fZGl2aXNvcnMgPSBzdW0ocHJvcGVyX2Rpdmlzb3JzKHgpKVxuICBpZiAoc3VtX2Rpdmlzb3JzID09IHgpe1xuICAgIHJldHVybihUUlVFKVxuICB9XG4gIGVsc2Uge1xuICAgIHJldHVybihGQUxTRSlcbiAgfVxufVxuXG4jVGhlIGZpcnN0IGZvdXIgcGVyZmVjdCBudW1iZXJzXG5mb3IgKGkgaW4gMTo5MDAwKXtcbiAgaWYgKHBlcmZlY3RfbnVtKGkpKXtcbiAgICBwcmludChpKVxuICB9XG59XG5gYGAifQ== -->
+<pre class="r"><code>proper_divisors = function(x){
+  candidates = seq_len(x-1)
+  candidates[x%%candidates == 0]
+}
+
+perfect_num = function(x) {
+  sum_divisors = sum(proper_divisors(x))
+  if (sum_divisors == x){
+    return(TRUE)
+  }
+  else {
+    return(FALSE)
   }
 }
-</code></pre>
+
+#The first four perfect numbers
+for (i in 1:9000){
+  if (perfect_num(i)){
+    print(i)
+  }
+}</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDZcblsxXSAyOFxuWzFdIDQ5NlxuWzFdIDgxMjhcbiJ9 -->
-<pre><code>[1] 6
-[1] 28
-[1] 496
-[1] 8128</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <ol start="33" style="list-style-type: decimal">
@@ -1776,9 +1785,32 @@ summary {
 </ol>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZm9yIChpIGluIDI6NzU2MSkge1xuICBpZiAoaSUlMiAhPSAwKXtcbiAgICBuZXh0XG4gIH1cbiAgXG4gIGlmIChoaWdobHlfY29tcG9zaXRlKGkpKXtcbiAgICBwcmludChpKVxuICB9XG59XG5cbmBgYCJ9 -->
-<pre class="r"><code>for (i in 2:7561) {
-  if (i%%2 != 0){
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGl2aXNvcnNfY291bnQgPSBmdW5jdGlvbih4KXtcbiAgY2FuZGlkYXRlcyA9IHNlcV9sZW4oeClcbiAgcmV0dXJuKGxlbmd0aChjYW5kaWRhdGVzW3glJWNhbmRpZGF0ZXMgPT0gMF0pKVxufVxuXG5kaXZpc29yc19jb3VudF92ZWMgPSBWZWN0b3JpemUoZGl2aXNvcnNfY291bnQpXG5cbmhpZ2hseV9jb21wb3NpdGUgPSBmdW5jdGlvbih4KSB7XG4gIHhfZGl2aXNvcnMgPSBkaXZpc29yc19jb3VudCh4KVxuICBpZiAoeF9kaXZpc29ycyA+IG1heChkaXZpc29yc19jb3VudF92ZWMoMTp4LTEpKSl7XG4gICAgcmV0dXJuKFRSVUUpXG4gIH1cbiAgICBlbHNlIHtcbiAgICAgIHJldHVybihGQUxTRSlcbiAgICB9XG59XG5cblxuI1RoZSBmaXJzdCAyMCBoaWdobHkgY29tcG9zaXRlIG51bWJlcnNcbmlmIChoaWdobHlfY29tcG9zaXRlKDEpKXtcbiAgICBwcmludCgxKVxuICB9XG5cbmZvciAoaSBpbiAyOjc1NjEpIHtcbiAgaWYgKGklJTIgIT0gMCl7ICNvZGQgaW50ZWdlcnMgPiAxIGNhbid0IGJlIGhpZ2hseSBjb21wb3NpdGUsIHNvIGRvbid0IGNvbnNpZGVyIHRoZW1cbiAgICBuZXh0XG4gIH1cbiAgXG4gIGlmIChoaWdobHlfY29tcG9zaXRlKGkpKXtcbiAgICBwcmludChpKVxuICB9XG59XG5cbmBgYCJ9 -->
+<pre class="r"><code>divisors_count = function(x){
+  candidates = seq_len(x)
+  return(length(candidates[x%%candidates == 0]))
+}
+
+divisors_count_vec = Vectorize(divisors_count)
+
+highly_composite = function(x) {
+  x_divisors = divisors_count(x)
+  if (x_divisors &gt; max(divisors_count_vec(1:x-1))){
+    return(TRUE)
+  }
+    else {
+      return(FALSE)
+    }
+}
+
+
+#The first 20 highly composite numbers
+if (highly_composite(1)){
+    print(1)
+  }
+
+for (i in 2:7561) {
+  if (i%%2 != 0){ #odd integers &gt; 1 can&#39;t be highly composite, so don&#39;t consider them
     next
   }
   
@@ -1788,26 +1820,6 @@ summary {
 }
 </code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDJcblsxXSA0XG5bMV0gNlxuWzFdIDEyXG5bMV0gMjRcblsxXSAzNlxuWzFdIDQ4XG5bMV0gNjBcblsxXSAxMjBcblsxXSAxODBcblsxXSAyNDBcblsxXSAzNjBcblsxXSA3MjBcblsxXSA4NDBcblsxXSAxMjYwXG5bMV0gMTY4MFxuWzFdIDI1MjBcblsxXSA1MDQwXG4ifQ== -->
-<pre><code>[1] 2
-[1] 4
-[1] 6
-[1] 12
-[1] 24
-[1] 36
-[1] 48
-[1] 60
-[1] 120
-[1] 180
-[1] 240
-[1] 360
-[1] 720
-[1] 840
-[1] 1260
-[1] 1680
-[1] 2520
-[1] 5040</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <ol start="34" style="list-style-type: decimal">
@@ -1815,13 +1827,34 @@ summary {
 </ol>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxud3JpdGVMaW5lcyhwYXN0ZShcIlRoZSBtb3N0IHN0ZXBzIGlzIGZvciBuPVwiLCBtb3N0X3N0ZXBzX24sIFwiLCB3aGljaCB0b29rXCIsIG1vc3Rfc3RlcHMsIFwic3RlcHNcIikpXG5cbmBgYCJ9 -->
-<pre class="r"><code>writeLines(paste(&quot;The most steps is for n=&quot;, most_steps_n, &quot;, which took&quot;, most_steps, &quot;steps&quot;))
-</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuY29sbGF0el9zdGVwID0gZnVuY3Rpb24obil7XG4gIGlmIChuJSUyID09IDApe1xuICAgIG4gPSBuLzJcbiAgfVxuICBlbHNlIHtcbiAgICBuID0gKDMqbikrMVxuICB9XG59XG5cbmNvbGxhdHogPSBmdW5jdGlvbihuXzApIHtcbiAgbl9pID0gbl8wXG4gIHdoaWxlIChuXzAgIT0gMSkge1xuICAgIG5fMCA9IGNvbGxhdHpfc3RlcChuXzApXG4gICAgbl9pID0gYyhuX2ksIG5fMClcbiAgfVxuICBzdGVwcyA9IGxlbmd0aChuX2kpIC0gMSAjZXhjbHVkZSBuXzAsIGFzIGl0IGRvZXMgbm90IHJlcHJlc2VudCBhIHN0ZXBcbiAgcmV0dXJuKHN0ZXBzKVxufVxuXG5cbnJlc3VsdHMgPSBzYXBwbHkoMToxMDAwMDAsIGNvbGxhdHopXG5cbm1vc3Rfc3RlcHMgPSBtYXgocmVzdWx0cylcbm1vc3Rfc3RlcHNfbiA9IHdoaWNoLm1heChyZXN1bHRzKVxuXG53cml0ZUxpbmVzKHBhc3RlKFwiVGhlIG1vc3Qgc3RlcHMgaXMgZm9yIG49XCIsIG1vc3Rfc3RlcHNfbiwgXCIsIHdoaWNoIHRvb2tcIiwgbW9zdF9zdGVwcywgXCJzdGVwc1wiKSlcbmBgYCJ9 -->
+<pre class="r"><code>collatz_step = function(n){
+  if (n%%2 == 0){
+    n = n/2
+  }
+  else {
+    n = (3*n)+1
+  }
+}
+
+collatz = function(n_0) {
+  n_i = n_0
+  while (n_0 != 1) {
+    n_0 = collatz_step(n_0)
+    n_i = c(n_i, n_0)
+  }
+  steps = length(n_i) - 1 #exclude n_0, as it does not represent a step
+  return(steps)
+}
+
+
+results = sapply(1:100000, collatz)
+
+most_steps = max(results)
+most_steps_n = which.max(results)
+
+writeLines(paste(&quot;The most steps is for n=&quot;, most_steps_n, &quot;, which took&quot;, most_steps, &quot;steps&quot;))</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiVGhlIG1vc3Qgc3RlcHMgaXMgZm9yIG49IDc3MDMxICwgd2hpY2ggdG9vayAzNTEgc3RlcHNcbiJ9 -->
-<pre><code>The most steps is for n= 77031 , which took 351 steps</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <ol start="35" style="list-style-type: decimal">
@@ -1829,13 +1862,31 @@ summary {
 </ol>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYmluYXJ5X2ludihjKDEsMCwwKSlcblxuYGBgIn0= -->
-<pre class="r"><code>binary_inv(c(1,0,0))
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYmluYXJ5X3JlcCA9IGZ1bmN0aW9uKHgpIHtcbiAgYmluYXJ5ID0gYygpXG4gIG4gPSB4XG4gIGkgPSAxXG4gIFxuICB3aGlsZSAobiA+IDApIHtcbiAgICAgIHIgPSBhcy5sb2dpY2FsKG4lJTJeaSlcbiAgICAgIGJpbmFyeSA9IGMociwgYmluYXJ5KVxuICAgICAgbiA9IG4gLSByKjJeKGktMSlcbiAgICAgIGkgPSBpKzFcbiAgfVxuICByZXR1cm4oYXMuaW50ZWdlcihiaW5hcnkpKVxufVxuXG5iaW5hcnlfcmVwKDYpXG5cbmJpbmFyeV9pbnYgPSBmdW5jdGlvbih4KXtcbiAgYmFzZSA9IDJeKChsZW5ndGgoeCktMSk6MClcbiAgcmV0dXJuKHN1bSh4KmJhc2UpKVxufVxuXG5iaW5hcnlfaW52KGMoMSwwLDApKVxuXG5cbmBgYCJ9 -->
+<pre class="r"><code>binary_rep = function(x) {
+  binary = c()
+  n = x
+  i = 1
+  
+  while (n &gt; 0) {
+      r = as.logical(n%%2^i)
+      binary = c(r, binary)
+      n = n - r*2^(i-1)
+      i = i+1
+  }
+  return(as.integer(binary))
+}
+
+binary_rep(6)
+
+binary_inv = function(x){
+  base = 2^((length(x)-1):0)
+  return(sum(x*base))
+}
+
+binary_inv(c(1,0,0))
 </code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDRcbiJ9 -->
-<pre><code>[1] 4</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <ol start="38" style="list-style-type: decimal">
@@ -1863,24 +1914,96 @@ for (i in 0:10){
   print(pascal(i))
 }</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDFcblsxXSAxIDFcblsxXSAxIDIgMVxuWzFdIDEgMyAzIDFcblsxXSAxIDQgNiA0IDFcblsxXSAgMSAgNSAxMCAxMCAgNSAgMVxuWzFdICAxICA2IDE1IDIwIDE1ICA2ICAxXG5bMV0gIDEgIDcgMjEgMzUgMzUgMjEgIDcgIDFcblsxXSAgMSAgOCAyOCA1NiA3MCA1NiAyOCAgOCAgMVxuIFsxXSAgIDEgICA5ICAzNiAgODQgMTI2IDEyNiAgODQgIDM2ICAgOSAgIDFcbiBbMV0gICAxICAxMCAgNDUgMTIwIDIxMCAyNTIgMjEwIDEyMCAgNDUgIDEwICAgMVxuIn0= -->
-<pre><code>[1] 1
-[1] 1 1
-[1] 1 2 1
-[1] 1 3 3 1
-[1] 1 4 6 4 1
-[1]  1  5 10 10  5  1
-[1]  1  6 15 20 15  6  1
-[1]  1  7 21 35 35 21  7  1
-[1]  1  8 28 56 70 56 28  8  1
- [1]   1   9  36  84 126 126  84  36   9   1
- [1]   1  10  45 120 210 252 210 120  45  10   1</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
+<ol start="39" style="list-style-type: decimal">
+<li><ol style="list-style-type: lower-alpha">
+<li></li>
+</ol></li>
+</ol>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYmlub21pYWwgPSBmdW5jdGlvbihzXzAsIE4sIFUsIEQpIHtcbiAgYmFzZSA9IGxpc3QoKVxuICBmb3IgKGkgaW4gMDpOKSB7XG4gICAgaiA9IHNlcSgxOihpKzEpKS0xXG4gICAgYmFzZVtbaSsxXV0gPSBzXzAgKiBVXihqKSAqIEReKGktailcbiAgfVxuICBcbiAgcmV0dXJuKGJhc2UpXG59XG5cblxuYmlub21pYWwoMSwzLDIsMC41KVxuYGBgIn0= -->
+<pre class="r"><code>binomial = function(s_0, N, U, D) {
+  base = list()
+  for (i in 0:N) {
+    j = seq(1:(i+1))-1
+    base[[i+1]] = s_0 * U^(j) * D^(i-j)
+  }
+  
+  return(base)
+}
+
+
+binomial(1,3,2,0.5)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<ol start="39" style="list-style-type: decimal">
+<li><ol start="2" style="list-style-type: lower-alpha">
+<li></li>
+</ol></li>
+</ol>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc2VxX2NvbnZlcnQgPSBmdW5jdGlvbihhKSB7XG4gIHJldHVybihzZXEoMTooYSsxKSktMSlcbn1cblxuYmlub21pYWxfYXBwbHkgPSBmdW5jdGlvbihzXzAsIE4sIFUsIEQpIHtcbiAgcmV0dXJucyA9IGxhcHBseShcbiAgICBsYXBwbHkoYXMubGlzdChzZXEoMTooTisxKSktMSksIHNlcV9jb252ZXJ0KSwgXG4gICAgZnVuY3Rpb24oaSkgc18wKlVeaSpEXihtYXgoaSktaSkpXG4gIHJldHVybihyZXR1cm5zKVxufVxuXG5cbmJpbm9taWFsX2FwcGx5KDEsMywyLDAuNSlcbmBgYCJ9 -->
+<pre class="r"><code>seq_convert = function(a) {
+  return(seq(1:(a+1))-1)
+}
+
+binomial_apply = function(s_0, N, U, D) {
+  returns = lapply(
+    lapply(as.list(seq(1:(N+1))-1), seq_convert), 
+    function(i) s_0*U^i*D^(max(i)-i))
+  return(returns)
+}
+
+
+binomial_apply(1,3,2,0.5)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<ol start="3" style="list-style-type: lower-alpha">
+<li></li>
+</ol>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI0VmZmljaWVuY3kgY29tcGFyaXNvbiBmb3IgYSBzbWFsbCBleGFtcGxlXG5zdGFydC50aW1lID0gU3lzLnRpbWUoKVxuaW52aXNpYmxlKGJpbm9taWFsKDEsMywyLDAuNSkpXG5lbmQudGltZSA9IFN5cy50aW1lKClcbnRpbWUudGFrZW4gPSBlbmQudGltZSAtIHN0YXJ0LnRpbWVcbnRpbWUudGFrZW5cblxuc3RhcnQudGltZSA9IFN5cy50aW1lKClcbmludmlzaWJsZShiaW5vbWlhbF9hcHBseSgxLDMsMiwwLjUpKVxuZW5kLnRpbWUgPSBTeXMudGltZSgpXG50aW1lLnRha2VuID0gZW5kLnRpbWUgLSBzdGFydC50aW1lXG50aW1lLnRha2VuXG5cblxuI0VmZmljaWVuY3kgY29tcGFyaXNvbiBmb3IgYSBsYXJnZSBleGFtcGxlXG5zdGFydC50aW1lID0gU3lzLnRpbWUoKVxuaW52aXNpYmxlKGJpbm9taWFsKDEsMzAwMCwyLDAuNSkpXG5lbmQudGltZSA9IFN5cy50aW1lKClcbnRpbWUudGFrZW4gPSBlbmQudGltZSAtIHN0YXJ0LnRpbWVcbnRpbWUudGFrZW5cblxuc3RhcnQudGltZSA9IFN5cy50aW1lKClcbmludmlzaWJsZShiaW5vbWlhbF9hcHBseSgxLDMwMDAsMiwwLjUpKVxuZW5kLnRpbWUgPSBTeXMudGltZSgpXG50aW1lLnRha2VuID0gZW5kLnRpbWUgLSBzdGFydC50aW1lXG50aW1lLnRha2VuXG5gYGAifQ== -->
+<pre class="r"><code>#Efficiency comparison for a small example
+start.time = Sys.time()
+invisible(binomial(1,3,2,0.5))
+end.time = Sys.time()
+time.taken = end.time - start.time
+time.taken
+
+start.time = Sys.time()
+invisible(binomial_apply(1,3,2,0.5))
+end.time = Sys.time()
+time.taken = end.time - start.time
+time.taken
+
+
+#Efficiency comparison for a large example
+start.time = Sys.time()
+invisible(binomial(1,3000,2,0.5))
+end.time = Sys.time()
+time.taken = end.time - start.time
+time.taken
+
+start.time = Sys.time()
+invisible(binomial_apply(1,3000,2,0.5))
+end.time = Sys.time()
+time.taken = end.time - start.time
+time.taken</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<ol start="3" style="list-style-type: lower-alpha">
+<li>Considering the execution efficiency of each above, the version using apply is typically quicker, though there is some variability between trials. The apply version is a bit easier to read and perhaps reason about to break down the function into its component steps. But, in this example where only one dimension is being iterated over, the ‘for’ version is fairly straightforward; the difference is probably more pronounced in more complex functions.</li>
+</ol>
 <!-- rnb-text-end -->
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiQ29tcHV0aW5nIEdyb3VwIDUgSG9tZXdvcmsgMiIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKRXhlcmNpc2VzIDI1LTMwLCAzMi0zNiwgMzgtNDcKCgozMi4KYGBge3J9CnByb3Blcl9kaXZpc29ycyA9IGZ1bmN0aW9uKHgpewogIGNhbmRpZGF0ZXMgPSBzZXFfbGVuKHgtMSkKICBjYW5kaWRhdGVzW3glJWNhbmRpZGF0ZXMgPT0gMF0KfQoKcGVyZmVjdF9udW0gPSBmdW5jdGlvbih4KSB7CiAgc3VtX2Rpdmlzb3JzID0gc3VtKHByb3Blcl9kaXZpc29ycyh4KSkKICBpZiAoc3VtX2Rpdmlzb3JzID09IHgpewogICAgcmV0dXJuKFRSVUUpCiAgfQogIGVsc2UgewogICAgcmV0dXJuKEZBTFNFKQogIH0KfQoKI1RoZSBmaXJzdCBmb3VyIHBlcmZlY3QgbnVtYmVycwpmb3IgKGkgaW4gMTo5MDAwKXsKICBpZiAocGVyZmVjdF9udW0oaSkpewogICAgcHJpbnQoaSkKICB9Cn0KYGBgCgoKMzMuCmBgYHtyfQpkaXZpc29yc19jb3VudCA9IGZ1bmN0aW9uKHgpewogIGNhbmRpZGF0ZXMgPSBzZXFfbGVuKHgpCiAgcmV0dXJuKGxlbmd0aChjYW5kaWRhdGVzW3glJWNhbmRpZGF0ZXMgPT0gMF0pKQp9CgpkaXZpc29yc19jb3VudF92ZWMgPSBWZWN0b3JpemUoZGl2aXNvcnNfY291bnQpCgpoaWdobHlfY29tcG9zaXRlID0gZnVuY3Rpb24oeCkgewogIHhfZGl2aXNvcnMgPSBkaXZpc29yc19jb3VudCh4KQogIGlmICh4X2Rpdmlzb3JzID4gbWF4KGRpdmlzb3JzX2NvdW50X3ZlYygxOngtMSkpKXsKICAgIHJldHVybihUUlVFKQogIH0KICAgIGVsc2UgewogICAgICByZXR1cm4oRkFMU0UpCiAgICB9Cn0KCgojVGhlIGZpcnN0IDIwIGhpZ2hseSBjb21wb3NpdGUgbnVtYmVycwppZiAoaGlnaGx5X2NvbXBvc2l0ZSgxKSl7CiAgICBwcmludCgxKQogIH0KCmZvciAoaSBpbiAyOjc1NjEpIHsKICBpZiAoaSUlMiAhPSAwKXsgI29kZCBpbnRlZ2VycyA+IDEgY2FuJ3QgYmUgaGlnaGx5IGNvbXBvc2l0ZSwgc28gZG9uJ3QgY29uc2lkZXIgdGhlbQogICAgbmV4dAogIH0KICAKICBpZiAoaGlnaGx5X2NvbXBvc2l0ZShpKSl7CiAgICBwcmludChpKQogIH0KfQoKYGBgCgozNC4KYGBge3J9CmNvbGxhdHpfc3RlcCA9IGZ1bmN0aW9uKG4pewogIGlmIChuJSUyID09IDApewogICAgbiA9IG4vMgogIH0KICBlbHNlIHsKICAgIG4gPSAoMypuKSsxCiAgfQp9Cgpjb2xsYXR6ID0gZnVuY3Rpb24obl8wKSB7CiAgbl9pID0gbl8wCiAgd2hpbGUgKG5fMCAhPSAxKSB7CiAgICBuXzAgPSBjb2xsYXR6X3N0ZXAobl8wKQogICAgbl9pID0gYyhuX2ksIG5fMCkKICB9CiAgc3RlcHMgPSBsZW5ndGgobl9pKQogIHJldHVybihzdGVwcykKfQoKCnJlc3VsdHMgPSBzYXBwbHkoMToxMDAwMDAsIGNvbGxhdHopCgptb3N0X3N0ZXBzID0gbWF4KHJlc3VsdHMpCm1vc3Rfc3RlcHNfbiA9IHdoaWNoLm1heChyZXN1bHRzKQoKd3JpdGVMaW5lcyhwYXN0ZSgiVGhlIG1vc3Qgc3RlcHMgaXMgZm9yIG49IiwgbW9zdF9zdGVwc19uLCAiLCB3aGljaCB0b29rIiwgbW9zdF9zdGVwcywgInN0ZXBzIikpCmBgYAoKCjM1LgpgYGB7cn0KYmluYXJ5X3JlcCA9IGZ1bmN0aW9uKHgpIHsKICBiaW5hcnkgPSBjKCkKICBuID0geAogIGkgPSAxCiAgCiAgd2hpbGUgKG4gPiAwKSB7CiAgICAgIHIgPSBhcy5sb2dpY2FsKG4lJTJeaSkKICAgICAgYmluYXJ5ID0gYyhyLCBiaW5hcnkpCiAgICAgIG4gPSBuIC0gcioyXihpLTEpCiAgICAgIGkgPSBpKzEKICB9CiAgcmV0dXJuKGFzLmludGVnZXIoYmluYXJ5KSkKfQoKYmluYXJ5X3JlcCg2KQoKYmluYXJ5X2ludiA9IGZ1bmN0aW9uKHgpewogIGJhc2UgPSAyXigobGVuZ3RoKHgpLTEpOjApCiAgcmV0dXJuKHN1bSh4KmJhc2UpKQp9CgpiaW5hcnlfaW52KGMoMSwwLDApKQoKCmBgYAoKCjM4LgpgYGB7cn0KcGFzY2FsID0gZnVuY3Rpb24obil7CiAgbGluZSA9IGMoMSkKICAKICBpZiAobj09MCl7CiAgICByZXR1cm4obGluZSkKICB9CiAgCiAgZWxzZSB7CiAgICBmb3IgKGkgaW4gMTpuKXsKICAgICAgbGluZSA9IGMoMCwgbGluZSkgKyBjKGxpbmUsIDApCiAgICB9CiAgICByZXR1cm4obGluZSkKICB9Cn0KCmZvciAoaSBpbiAwOjEwKXsKICBwcmludChwYXNjYWwoaSkpCn0KCgpgYGAKCgoKCgoKCgoKCgo=</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiQ29tcHV0aW5nIEdyb3VwIDUgSG9tZXdvcmsgMiIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKRXhlcmNpc2VzIDI1LTMwLCAzMi0zNiwgMzgtNDcKCgozMi4KYGBge3J9CnByb3Blcl9kaXZpc29ycyA9IGZ1bmN0aW9uKHgpewogIGNhbmRpZGF0ZXMgPSBzZXFfbGVuKHgtMSkKICBjYW5kaWRhdGVzW3glJWNhbmRpZGF0ZXMgPT0gMF0KfQoKcGVyZmVjdF9udW0gPSBmdW5jdGlvbih4KSB7CiAgc3VtX2Rpdmlzb3JzID0gc3VtKHByb3Blcl9kaXZpc29ycyh4KSkKICBpZiAoc3VtX2Rpdmlzb3JzID09IHgpewogICAgcmV0dXJuKFRSVUUpCiAgfQogIGVsc2UgewogICAgcmV0dXJuKEZBTFNFKQogIH0KfQoKI1RoZSBmaXJzdCBmb3VyIHBlcmZlY3QgbnVtYmVycwpmb3IgKGkgaW4gMTo5MDAwKXsKICBpZiAocGVyZmVjdF9udW0oaSkpewogICAgcHJpbnQoaSkKICB9Cn0KYGBgCgoKMzMuCmBgYHtyfQpkaXZpc29yc19jb3VudCA9IGZ1bmN0aW9uKHgpewogIGNhbmRpZGF0ZXMgPSBzZXFfbGVuKHgpCiAgcmV0dXJuKGxlbmd0aChjYW5kaWRhdGVzW3glJWNhbmRpZGF0ZXMgPT0gMF0pKQp9CgpkaXZpc29yc19jb3VudF92ZWMgPSBWZWN0b3JpemUoZGl2aXNvcnNfY291bnQpCgpoaWdobHlfY29tcG9zaXRlID0gZnVuY3Rpb24oeCkgewogIHhfZGl2aXNvcnMgPSBkaXZpc29yc19jb3VudCh4KQogIGlmICh4X2Rpdmlzb3JzID4gbWF4KGRpdmlzb3JzX2NvdW50X3ZlYygxOngtMSkpKXsKICAgIHJldHVybihUUlVFKQogIH0KICAgIGVsc2UgewogICAgICByZXR1cm4oRkFMU0UpCiAgICB9Cn0KCgojVGhlIGZpcnN0IDIwIGhpZ2hseSBjb21wb3NpdGUgbnVtYmVycwppZiAoaGlnaGx5X2NvbXBvc2l0ZSgxKSl7CiAgICBwcmludCgxKQogIH0KCmZvciAoaSBpbiAyOjc1NjEpIHsKICBpZiAoaSUlMiAhPSAwKXsgI29kZCBpbnRlZ2VycyA+IDEgY2FuJ3QgYmUgaGlnaGx5IGNvbXBvc2l0ZSwgc28gZG9uJ3QgY29uc2lkZXIgdGhlbQogICAgbmV4dAogIH0KICAKICBpZiAoaGlnaGx5X2NvbXBvc2l0ZShpKSl7CiAgICBwcmludChpKQogIH0KfQoKYGBgCgozNC4KYGBge3J9CmNvbGxhdHpfc3RlcCA9IGZ1bmN0aW9uKG4pewogIGlmIChuJSUyID09IDApewogICAgbiA9IG4vMgogIH0KICBlbHNlIHsKICAgIG4gPSAoMypuKSsxCiAgfQp9Cgpjb2xsYXR6ID0gZnVuY3Rpb24obl8wKSB7CiAgbl9pID0gbl8wCiAgd2hpbGUgKG5fMCAhPSAxKSB7CiAgICBuXzAgPSBjb2xsYXR6X3N0ZXAobl8wKQogICAgbl9pID0gYyhuX2ksIG5fMCkKICB9CiAgc3RlcHMgPSBsZW5ndGgobl9pKSAtIDEgI2V4Y2x1ZGUgbl8wLCBhcyBpdCBkb2VzIG5vdCByZXByZXNlbnQgYSBzdGVwCiAgcmV0dXJuKHN0ZXBzKQp9CgoKcmVzdWx0cyA9IHNhcHBseSgxOjEwMDAwMCwgY29sbGF0eikKCm1vc3Rfc3RlcHMgPSBtYXgocmVzdWx0cykKbW9zdF9zdGVwc19uID0gd2hpY2gubWF4KHJlc3VsdHMpCgp3cml0ZUxpbmVzKHBhc3RlKCJUaGUgbW9zdCBzdGVwcyBpcyBmb3Igbj0iLCBtb3N0X3N0ZXBzX24sICIsIHdoaWNoIHRvb2siLCBtb3N0X3N0ZXBzLCAic3RlcHMiKSkKYGBgCgoKMzUuCmBgYHtyfQpiaW5hcnlfcmVwID0gZnVuY3Rpb24oeCkgewogIGJpbmFyeSA9IGMoKQogIG4gPSB4CiAgaSA9IDEKICAKICB3aGlsZSAobiA+IDApIHsKICAgICAgciA9IGFzLmxvZ2ljYWwobiUlMl5pKQogICAgICBiaW5hcnkgPSBjKHIsIGJpbmFyeSkKICAgICAgbiA9IG4gLSByKjJeKGktMSkKICAgICAgaSA9IGkrMQogIH0KICByZXR1cm4oYXMuaW50ZWdlcihiaW5hcnkpKQp9CgpiaW5hcnlfcmVwKDYpCgpiaW5hcnlfaW52ID0gZnVuY3Rpb24oeCl7CiAgYmFzZSA9IDJeKChsZW5ndGgoeCktMSk6MCkKICByZXR1cm4oc3VtKHgqYmFzZSkpCn0KCmJpbmFyeV9pbnYoYygxLDAsMCkpCgoKYGBgCgoKMzguCmBgYHtyfQpwYXNjYWwgPSBmdW5jdGlvbihuKXsKICBsaW5lID0gYygxKQogIAogIGlmIChuPT0wKXsKICAgIHJldHVybihsaW5lKQogIH0KICAKICBlbHNlIHsKICAgIGZvciAoaSBpbiAxOm4pewogICAgICBsaW5lID0gYygwLCBsaW5lKSArIGMobGluZSwgMCkKICAgIH0KICAgIHJldHVybihsaW5lKQogIH0KfQoKZm9yIChpIGluIDA6MTApewogIHByaW50KHBhc2NhbChpKSkKfQpgYGAKCgoKMzkuIGEuCmBgYHtyfQpiaW5vbWlhbCA9IGZ1bmN0aW9uKHNfMCwgTiwgVSwgRCkgewogIGJhc2UgPSBsaXN0KCkKICBmb3IgKGkgaW4gMDpOKSB7CiAgICBqID0gc2VxKDE6KGkrMSkpLTEKICAgIGJhc2VbW2krMV1dID0gc18wICogVV4oaikgKiBEXihpLWopCiAgfQogIAogIHJldHVybihiYXNlKQp9CgoKYmlub21pYWwoMSwzLDIsMC41KQpgYGAKCjM5LiBiLgpgYGB7cn0Kc2VxX2NvbnZlcnQgPSBmdW5jdGlvbihhKSB7CiAgcmV0dXJuKHNlcSgxOihhKzEpKS0xKQp9CgpiaW5vbWlhbF9hcHBseSA9IGZ1bmN0aW9uKHNfMCwgTiwgVSwgRCkgewogIHJldHVybnMgPSBsYXBwbHkoCiAgICBsYXBwbHkoYXMubGlzdChzZXEoMTooTisxKSktMSksIHNlcV9jb252ZXJ0KSwgCiAgICBmdW5jdGlvbihpKSBzXzAqVV5pKkReKG1heChpKS1pKSkKICByZXR1cm4ocmV0dXJucykKfQoKCmJpbm9taWFsX2FwcGx5KDEsMywyLDAuNSkKYGBgCgpjLgpgYGB7cn0KI0VmZmljaWVuY3kgY29tcGFyaXNvbiBmb3IgYSBzbWFsbCBleGFtcGxlCnN0YXJ0LnRpbWUgPSBTeXMudGltZSgpCmludmlzaWJsZShiaW5vbWlhbCgxLDMsMiwwLjUpKQplbmQudGltZSA9IFN5cy50aW1lKCkKdGltZS50YWtlbiA9IGVuZC50aW1lIC0gc3RhcnQudGltZQp0aW1lLnRha2VuCgpzdGFydC50aW1lID0gU3lzLnRpbWUoKQppbnZpc2libGUoYmlub21pYWxfYXBwbHkoMSwzLDIsMC41KSkKZW5kLnRpbWUgPSBTeXMudGltZSgpCnRpbWUudGFrZW4gPSBlbmQudGltZSAtIHN0YXJ0LnRpbWUKdGltZS50YWtlbgoKCiNFZmZpY2llbmN5IGNvbXBhcmlzb24gZm9yIGEgbGFyZ2UgZXhhbXBsZQpzdGFydC50aW1lID0gU3lzLnRpbWUoKQppbnZpc2libGUoYmlub21pYWwoMSwzMDAwLDIsMC41KSkKZW5kLnRpbWUgPSBTeXMudGltZSgpCnRpbWUudGFrZW4gPSBlbmQudGltZSAtIHN0YXJ0LnRpbWUKdGltZS50YWtlbgoKc3RhcnQudGltZSA9IFN5cy50aW1lKCkKaW52aXNpYmxlKGJpbm9taWFsX2FwcGx5KDEsMzAwMCwyLDAuNSkpCmVuZC50aW1lID0gU3lzLnRpbWUoKQp0aW1lLnRha2VuID0gZW5kLnRpbWUgLSBzdGFydC50aW1lCnRpbWUudGFrZW4KYGBgCgpjLiBDb25zaWRlcmluZyB0aGUgZXhlY3V0aW9uIGVmZmljaWVuY3kgb2YgZWFjaCBhYm92ZSwgdGhlIHZlcnNpb24gdXNpbmcgYXBwbHkgaXMgdHlwaWNhbGx5IHF1aWNrZXIsIHRob3VnaCB0aGVyZSBpcyBzb21lIHZhcmlhYmlsaXR5IGJldHdlZW4gdHJpYWxzLiBUaGUgYXBwbHkgdmVyc2lvbiBpcyBhIGJpdCBlYXNpZXIgdG8gcmVhZCBhbmQgcGVyaGFwcyByZWFzb24gYWJvdXQgdG8gYnJlYWsgZG93biB0aGUgZnVuY3Rpb24gaW50byBpdHMgY29tcG9uZW50IHN0ZXBzLiBCdXQsIGluIHRoaXMgZXhhbXBsZSB3aGVyZSBvbmx5IG9uZSBkaW1lbnNpb24gaXMgYmVpbmcgaXRlcmF0ZWQgb3ZlciwgdGhlICdmb3InIHZlcnNpb24gaXMgZmFpcmx5IHN0cmFpZ2h0Zm9yd2FyZDsgdGhlIGRpZmZlcmVuY2UgaXMgcHJvYmFibHkgbW9yZSBwcm9ub3VuY2VkIGluIG1vcmUgY29tcGxleCBmdW5jdGlvbnMuCgoKCgoKCg==</div>
 
 
 
