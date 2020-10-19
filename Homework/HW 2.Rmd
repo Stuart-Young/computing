@@ -161,6 +161,17 @@ binary_inv(c(1,0,0))
 
 ```
 
+36.
+Using gcd function from #26
+```{r}
+lcm = function(a,b) {
+  value = abs((a*b))/gcd(a,b)
+  return(value)
+}
+
+lcm(10,5)
+```
+
 
 38.
 ```{r}
