@@ -369,7 +369,7 @@ double_sum(5)
 ```
 
 b. 
-col returns the column number for each element
+
 ```{r}
 double_sum_colrow = function (n) {
   base = matrix(0,n,n)
@@ -455,29 +455,43 @@ expmod(9,4,2)
 (9^4) %% 2
 
 ```
+
+
 43.
 ```{r}
-cat(" The smallest integer is -2^(32-1)=", as.character(-2^(32-1)), " while the largest integer is 2^(32-1)-1=", as.character(2^(32-1)-1), "\n")
+#smallest
+-2^(32-1)
 
+#largest
+2^(32-1)-1
 ```
+
 
 44.
 ```{r}
-cat("The numbers that correspond to the given k-bit sequences are -1 and -2^(k-1)+1, which are the biggest negative number and the second smallest negative number, respectively. \n")
+#first sequence
+-1
+
+#second sequence
+-2^(k-1)+1
 
 ```
+
+
 45.
 ```{r}
 binary_to=function(n){
-  if(n<2){
+  if (n<2) {
     return(n)
   }
+  
   p=floor(log(n)/log(2)) 
   binary=integer(p+1)
+  
   for(i in 0:p){
-    if(n>=2^(p-i)){ # start with highest power that fits into n
-      binary[i+1]=1 # fill vector from left to right
-      n=n-2^(p-i)   # substract power from n and go again
+    if(n>=2^(p-i)){ 
+      binary[i+1]=1 
+      n=n-2^(p-i)   
     }
   }
   return(binary)
@@ -486,86 +500,60 @@ binary_from=function(b){
   powers=seq(0, length(b)-1)[rev(b)==1]
   return(sum(2^powers))
 }
-to_twos_comp=function(n, k=32){
+to_twos=function(n, k=32){
   if(n>=0){
-    "Twos complement representation for positive numbers is just the regular presentation."
     return(c(rep(0, k-length(binary_to(n))), binary_to(n)))                       
   }else{
-    "For negative numbers its 1 as a \"sign\" bit and the binary representation of 2^k minus the absolute value of the number."
     return(c(1, rep(0, k-length(binary_to(2^(k-1)+n))-1), binary_to(2^(k-1)+n)))
   }
 }
-to_twos_comp(6)
-to_twos_comp(-6)
-to_twos_comp(0, 3)
-to_twos_comp(1, 3)
-to_twos_comp(2, 3)
-to_twos_comp(3, 3)
-to_twos_comp(-4, 3)
-to_twos_comp(-3, 3)
-to_twos_comp(-2, 3)
-to_twos_comp(-1, 3)
-from_twos_comp=function(binary){
+
+to_twos(2)
+to_twos(0, 1)
+
+
+from_twos=function(binary){
   if(binary[1]==0){
-    "straightforward reversal of binary"
     return(binary_from(binary))
   }else{
-    "reverse the transformation operations (leave out first bit and then substract 2^(length of remainder) from binary representation."
     return(binary_from(binary[-1])-2^(length(binary)-1))
   }
 }
-from_twos_comp(to_twos_comp(-5, 4))
-from_twos_comp(c(1, 1, 1, 1, 1, 1, 1, 1))
-from_twos_comp(c(1, 0, 1, 1, 0, 1, 0, 1))
+
+from_twos(c(1, 1))
+from_twos(to_twos(2, 4))
+
+
 ```
+
+
 46.
 Here, we again reuse gcd function from exercise 26
 ```{r}
-gcd=function(a, b){
-  if(a%%b==0){
-    return(b)
-  }else{
-    return(gcd(b, a%%b))
-  }
-}
+
 make_rat=function(p, q){
   return(c(p/gcd(p, q), q/gcd(p, q)))
 }
-make_rat(19, -95)
-make_rat(-19, 95)
-make_rat(-95, 19)
-make_rat(95, -19)
-rn=make_rat(4, 2)
-rn
+
+make_rat(34, 11)
+
 numer=function(rat){
   return(rat[1])
 }
-numer(rn)
+
+numer(make_rat(34, 11))
+
 denom=function(rat){
   return(rat[2])
 }
-denom(rn)
+
+denom(make_rat(34, 11))
 ```
 
 47.
 Here, we again reuse gcd function from exercise 26, lcm function from exercise 36 and make_rat, numer, denom functions from exercise 44.
 
 ```{r}
-gcd=function(a, b){
-  if(a%%b==0){
-    return(b)
-  }else{
-    return(gcd(b, a%%b))
-  }
-}
-
-lcm=function(a, b){
-  return((a/gcd(a, b))*b)
-}
-
-make_rat=function(p, q){
-  return(c(p/gcd(p, q), q/gcd(p, q)))
-}
 numer=function(rat){
   return(rat[1])
 }
@@ -574,16 +562,19 @@ denom=function(rat){
 }
 
 add_rat=function(rat1, rat2){
-  p=numer(rat1)*lcm(denom(rat1), denom(rat2))/denom(rat1)+numer(rat2)*lcm(denom(rat1), denom(rat2))/denom(rat2)
+  p=numer(rat1)*lcm(denom(rat1), denom(rat2))/denom(rat1)+numer(rat2)*lcm(denom(rat1),   denom(rat2))/denom(rat2)
   q=lcm(denom(rat1), denom(rat2))
   return(make_rat(p, q))
 }
-add_rat(c(2, 1), c(3, 4))
+
 
 mul_rat=function(rat1, rat2){
   p=numer(rat1)*numer(rat2)
   q=denom(rat1)*denom(rat2)
   return(make_rat(p, q))
 }
-mul_rat(c(2, 1), c(3, 4))
+
+
+add_rat(c(5, 1), c(9, 2))
+mul_rat(c(5, 1), c(9, 2))
 ```
