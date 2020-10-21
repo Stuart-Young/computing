@@ -354,6 +354,41 @@ time.taken
 c. Considering the execution efficiency of each above, the version using apply is typically quicker, though there is some variability between trials. The apply version is a bit easier to read and perhaps reason about to break down the function into its component steps. But, in this example where only one dimension is being iterated over, the 'for' version is fairly straightforward; the difference is probably more pronounced in more complex functions.
 
 
+40. a.
+```{r}
+double_sum = function(n) {
+  sum = 0
+  for (r in 1:n){
+    for (c in 1:r) {
+      sum = sum + (c^2)/(5+10*r^3)
+      }
+  }
+  return(sum)  
+}
+double_sum(5)
+```
+
+b. 
+col returns the column number for each element
+```{r}
+double_sum_colrow = function (n) {
+  base = matrix(0,n,n)
+  
+  cols = col(matrix(0,n,n))
+  cols = apply(cols, c(1,2), function(x) x^2)
+  
+  rows = row(matrix(0,n,n))
+  rows = apply(rows, c(1,2), function(x) 1/(5+10*x^3))
+  
+  base = rows*cols
+  final_sum = sum(base[col(base) <= row(base)]) #sum of lower triangular elements
+  return(final_sum)
+}
+
+double_sum_colrow(5)
+```
+
+
 41.
 ```{r}
 change_combos = function(a, coin_vec){
