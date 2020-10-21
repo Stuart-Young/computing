@@ -35,7 +35,98 @@ gcd(5, 3)
 
 ```
 
+27.
+```{r}
+seq_is_even <- function(n)
+{
+  return_vector <- NULL
+  for(i in 1:n)
+  {
+    return_vector=c(rep((i%%2==0),i),return_vector)
+  }
+  
+  return(return_vector)
+}
 
+seq_is_even(4)
+seq_is_even(3)
+seq_is_even(2)
+```
+
+28.
+```{r}
+
+count_odd <- function(s)
+{
+  temp_vector <- logical(length(s))
+  temp_vector[s%%2==1]=1
+  return(sum(temp_vector))
+}
+count_odd(c(3,3,6,6,7,7))
+count_odd(c(1,2,3,4,5,6))
+
+```
+
+29.
+```{r}
+
+# We implemented our solution from ex. 26 (GCD) for this
+gcd <- function (a, b) {
+  
+  if(a%%b == 0) {b}
+  
+  else {gcd(b, a%%b)}
+  
+}
+
+rel_prime <-function(a,b)
+{
+  if(gcd(a,b)==1)
+  {
+    return(TRUE)
+  }
+  else
+  {
+    return(FALSE)
+  }
+}
+
+rel_prime(2,1)
+rel_prime(4,2)
+rel_prime(2,4)
+rel_prime(3,7)
+
+
+```
+
+30.
+```{r}
+# We implemented our solution from ex. 26 (GCD) for this
+gcd <- function (a, b) {
+  
+  if(a%%b == 0) {b}
+  
+  else {gcd(b, a%%b)}
+  
+}
+
+
+is_prime <- function(n)
+{
+ 
+  for(i in 1:(n-1)){
+    if(gcd(n, i)!=1)
+    {
+      return(FALSE)
+    }
+  }
+  return(TRUE)
+}
+
+is_prime(7)
+is_prime(3)
+is_prime(4)
+```
 
 
 
