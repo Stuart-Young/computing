@@ -78,3 +78,43 @@ for (i in seq(1:25)){
 #Using either method, e can be approximated to 6 decimal places (2.718282).
 ```
 
+53. 
+```{r}
+abs(3* (4/3-1) -1 )
+
+# the idea is that 4/3 gets cut off after 16 decimals. therefore the absolute value results in not being 0, but the smallest possible number. this works in IEEE 754 double precision 
+```
+
+54.
+```{r}
+x <- c(0,7,8)
+x[0.9999999999999999]   # the maximum precision we can expect for floating point computations is 16 decimal digits after the comma. 
+x[0.99999999999999999]    # therefore r rounds this to 1
+```
+
+55.
+```{r}
+options(digits=22)
+
+ex55a <- function(x) {
+  x <- 1
+  while(x + 1 != 1)
+    x <- x/2
+  return(x*2)
+}
+
+ex55a()
+
+1+ex55a()
+
+ex55b <- function(x) {
+  x <- 1
+  while(1 - x != 1)
+    x <- x/2
+  return(x*2)
+}
+
+ex55b()
+1-ex55b()
+
+```
