@@ -3,17 +3,78 @@ title: "QFin Computing Group 2 HW 3"
 output: html_notebook
 ---
 
-This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+48-55, 62-71
 
-Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Cmd+Shift+Enter*. 
-
+62.
 ```{r}
-plot(cars)
+
 ```
 
-Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Cmd+Option+I*.
 
-When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Cmd+Shift+K* to preview the HTML file). 
+63.
+```{r}
+a = 1
+b = 2^(-53)
+c = 2^(-54)
 
-The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
+(a+b)+c == a+(b+c)
+```
+
+64.
+```{r}
+log(exp(5)) 
+exp(log(5))
+
+log(exp(5)) == exp(log(5)) 
+
+2^(-52) 
+log(exp(5)) - exp(log(5))
+```
+The relationship does hold, "approximately". The difference (representing an error) is the same order of magnitude as the smallest floating point number that double precision computations allow. For most practical purposes, the relationship can be considered true in R.
+
+
+65.
+```{r}
+e_limit = function(n) {
+  return((1+(1/n))^n)
+}
+
+#Estimations for e
+e_limit(10^seq(1,20))
+
+#Error terms for all k=1,...,20
+abs(e_limit(10^seq(1,20)) - exp(1))
+```
+The error is minimized at approximately n=10^8. For n larger than that, the error increases and converges to exp(1)-1 at approximately n=10^16. Starting at this n value, the 1/n term becomes smaller than 2^(-52), which is the smallest positive number that R can handle. As a result of this imprecision, the estimate for e has increasingly (and eventually large) error values for n > 10^16.
+
+
+66.
+```{r}
+e_approx = function(n, type){
+  if (type == "first"){
+    value = (1+(1/n))^n
+    return(value)
+  }
+  else if (type == "second") {
+    value = (1+n)^(1/n) #note that n=1/h
+    return(value)
+  }
+  else {
+    return("Error")
+  }
+}
+
+exp(1)
+
+for (i in seq(1:25)){
+  print(e_approx(10^i, "first"))
+}
+
+for (i in seq(1:25)){
+  print(e_approx(10^(-i), "second"))
+}
+
+
+#Using either method, e can be approximated to 6 decimal places (2.718282).
+```
 
