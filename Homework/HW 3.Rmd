@@ -1,5 +1,5 @@
 ---
-title: "Computing Group 2 HW 3"
+title: "QFin Computing Group 2 HW 3"
 output: html_notebook
 ---
 
