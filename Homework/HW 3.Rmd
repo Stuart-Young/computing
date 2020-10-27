@@ -60,18 +60,16 @@ y^2
 
 #If x and y can be represented without error, this does not imply that x^2 and y^2 also can be represented without error.
 
-x = 2^(-500)
-x
-y = 2^495
-y
+#(x+y)(x-y) will be more accurate than x^2-y^2 because x and y being representable implies that (x+y) and (x-y) can also be represented, while this is not the case for x^2 and y^2, per above. 
 
-x^2
-y^2
+x = 2^500
+y = -2^5
 
 (x^2-y^2)
 (x+y) * (x-y)
 (x^2-y^2) - (x+y) * (x-y)
 
+#Intuitively, we would expect that the error would be most different for x and y values that are very far apart, though can't find an example to show this.
 ```
 
 
@@ -136,7 +134,6 @@ for (i in seq(1:25)){
 for (i in seq(1:25)){
   print(e_approx(10^(-i), "second"))
 }
-
 
 #Using either method, e can be approximated to 6 decimal places (2.718282).
 ```
