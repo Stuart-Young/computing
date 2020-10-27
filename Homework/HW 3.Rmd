@@ -5,79 +5,6 @@ output: html_notebook
 
 48-55, 62-71
 
-62.
-```{r}
-
-```
-
-
-63.
-```{r}
-a = 1
-b = 2^(-53)
-c = 2^(-54)
-
-(a+b)+c == a+(b+c)
-```
-
-64.
-```{r}
-log(exp(5)) 
-exp(log(5))
-
-log(exp(5)) == exp(log(5)) 
-
-2^(-52) 
-log(exp(5)) - exp(log(5))
-```
-The relationship does hold, "approximately". The difference (representing an error) is the same order of magnitude as the smallest floating point number that double precision computations allow. For most practical purposes, the relationship can be considered true in R.
-
-
-65.
-```{r}
-e_limit = function(n) {
-  return((1+(1/n))^n)
-}
-
-#Estimations for e
-e_limit(10^seq(1,20))
-
-#Error terms for all k=1,...,20
-abs(e_limit(10^seq(1,20)) - exp(1))
-```
-The error is minimized at approximately n=10^8. For n larger than that, the error increases and converges to exp(1)-1 at approximately n=10^16. Starting at this n value, the 1/n term becomes smaller than 2^(-52), which is the smallest positive number that R can handle. As a result of this imprecision, the estimate for e has increasingly (and eventually large) error values for n > 10^16.
-
-
-66.
-```{r}
-e_approx = function(n, type){
-  if (type == "first"){
-    value = (1+(1/n))^n
-    return(value)
-  }
-  else if (type == "second") {
-    value = (1+n)^(1/n) #note that n=1/h
-    return(value)
-  }
-  else {
-    return("Error")
-  }
-}
-
-exp(1)
-
-for (i in seq(1:25)){
-  print(e_approx(10^i, "first"))
-}
-
-for (i in seq(1:25)){
-  print(e_approx(10^(-i), "second"))
-}
-
-
-#Using either method, e can be approximated to 6 decimal places (2.718282).
-```
-
 53. 
 ```{r}
 abs(3* (4/3-1) -1 )
@@ -115,6 +42,114 @@ ex55b <- function(x) {
 }
 
 ex55b()
-1-ex55b()
+1-ex55b() #2^(-53)
 
 ```
+
+
+62.
+```{r}
+x = 2^1023 * (2-2^(-52))
+y = 2^(-1022)
+
+x
+y
+
+x^2
+y^2
+
+#If x and y can be represented without error, this does not imply that x^2 and y^2 also can be represented without error.
+
+x = 2^(-500)
+x
+y = 2^495
+y
+
+x^2
+y^2
+
+(x^2-y^2)
+(x+y) * (x-y)
+(x^2-y^2) - (x+y) * (x-y)
+
+```
+
+
+63.
+```{r}
+a = 1
+b = 2^(-53)
+c = 2^(-54)
+
+(a+b)+c == a+(b+c)
+```
+
+64.
+```{r}
+log(exp(5)) 
+exp(log(5))
+
+log(exp(5)) == exp(log(5)) 
+
+log(exp(5)) - exp(log(5))
+```
+The relationship does hold approximately, as the error is very small relative to x. For most practical purposes, the relationship can be considered true in R.
+
+
+65.
+```{r}
+e_limit = function(n) {
+  return((1+(1/n))^n)
+}
+
+#Estimations for e
+e_limit(10^seq(1,20))
+
+#Error terms for all k=1,...,20
+abs(e_limit(10^seq(1,20)) - exp(1))
+```
+The error is minimized at approximately n=10^8. For n larger than that, the error increases and converges to exp(1)-1 at approximately n=10^16. Starting at this n value, the 1/n term becomes smaller than 2^(-52), and modulo rounding errors are introduced. As a result of this imprecision, the estimate for e has very large error values for n >= 10^15 
+
+
+66.
+```{r}
+e_approx = function(n, type){
+  if (type == "first"){
+    value = (1+(1/n))^n
+    return(value)
+  }
+  else if (type == "second") {
+    value = (1+n)^(1/n) #note that n=1/h
+    return(value)
+  }
+  else {
+    return("Error")
+  }
+}
+
+exp(1)
+
+for (i in seq(1:25)){
+  print(e_approx(10^i, "first"))
+}
+
+for (i in seq(1:25)){
+  print(e_approx(10^(-i), "second"))
+}
+
+
+#Using either method, e can be approximated to 6 decimal places (2.718282).
+```
+
+67.
+```{r}
+prime_check = function(n) {
+  ((factorial(n-1)+1) %% n == 0)
+}
+
+for (i in 2:25) {
+  print(paste(i, prime_check(i)))
+}
+```
+This approach fails starting at n=20, because 19! is too large to be stored accurately in double precision floating point systems. This is not a good way for a computer to test for primality. 
+
