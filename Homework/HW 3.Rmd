@@ -5,6 +5,18 @@ output: html_notebook
 
 48-55, 62-71
 
+
+52.
+```{r}
+#smallest significant digit: b^(1-p) 
+#smallest step size: b^e_min  
+#minimum spacing between x and y: b^(e_min + 1 - p)
+
+#largest step size: b^e_max 
+#maximum spacing between x and y: b^(e_max + 1 - p)
+```
+
+
 53. 
 ```{r}
 abs(3* (4/3-1) -1 )
