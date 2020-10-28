@@ -193,3 +193,79 @@ for (i in 2:25) {
 ```
 This approach fails starting at n=20, because 19! is too large to be stored accurately in double precision floating point systems. This is not a good way for a computer to test for primality. 
 
+68. 
+```{r}
+cat("
+a)\n
+Limit of a rational function where both numerator and denominator tends to 0 according to l`Hôpital's rule is the limit of the rational function composed of the derivative of the numerator and the derivative of the denominator. \n
+It means that the limit of (e^x-1)/x is the limit of e^x/1=e^x, which is exactly 1 if x tends to 0. \n
+")
+
+cat("
+b)\n
+k \t x \t emp. appr. limit \n")
+for(k in 1:15){
+  x=10^-k
+  cat(k, "\t", x ,"\t \t")
+  cat((exp(x)-1)/x, "\n")
+}
+cat("
+The results do not coincide with theoretical expectations. \n
+For small k it can be explained by representation error in the calculation of exp(x), for large k this is because of representation errors in 1/x. \n
+")
+
+cat("
+
+c)\n
+k \t x \t emp. appr. limit \n")
+for(k in 1:15){
+  x=10^-k
+  cat(k, "\t", x ,"\t \t")
+  cat((exp(x)-1)/log(exp(x)), "\n")
+}
+cat("
+The results again do not agree with theoretical expectation, but here only for small k. \n
+The representation error in log(exp(x)) offsets the representation error in 1/x for large k.\n
+")
+```
+
+69.
+```{r}
+approx_deriv=function(f, x){
+  h=1/10^10
+  return((f(x+h)-f(x))/h)
+}
+approx_deriv(function(x) x^2, 1)
+approx_deriv(function(x) x^2, 2)
+approx_deriv(function(x) x^2, -1)
+approx_deriv(function(x) x^2, 0)
+
+f=function(x) tan(x)
+approx_deriv(f, 1)
+1+tan(1)^2
+cat("The program works rather well, its output differs from the actuall value only in the 6th significant digit, and only marginally so. \n  
+")
+```
+
+70.
+```{r}
+cat("
+Substracting numbers that are approximately equal would result in something close to zero which causes floating point representation errors. \n
+Alternative formula calculation includes something that is roughly 2*b which has a lower relative error.
+\n
+")
+```
+
+71.
+```{r}
+cat("
+a) \n
+For very big x, very small x, or x very close to +1/-1. \n
+b) \n
+1/(1-x)-1/(1+x) can be rewritten as 2x/(1-x^2). \n
+When x is close to +/-1, (1-x^2) is bigger than (1-x) or respectively (1+x), meaning that when we divide by it we get a smaller relative representation error. \n
+Also we do not have a possible error that may arise when substracting 
+1/(1-x) and 1/(1+x).
+\n    
+")
+```
