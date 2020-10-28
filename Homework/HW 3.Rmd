@@ -4,7 +4,38 @@ output: html_notebook
 ---
 
 48-55, 62-71
+```{r}
+cat("a) normalized number means that the digit before the seperator is not 0
+      b..base, p..precision
+      based on what we learned there are 2*(b-1)*b^(p-1)*(e_max-e_min+1)+1 different non-zero normalized numbers.")
 
+cat("b) b..base, p..precision
+      The largest normalized positive number would be (1-b^(-p))*(b^(e_max+1))
+      The smallest normalized negative number would be 1*b^e_min.")
+```
+
+49.
+```{r}
+cat("Smallest values for p and emin and largest for emax?
+    P(recision) has to be at least 6, as the first number 2365,27 is six digits long.
+    emin has to be -7 in order to represent 0.0000512. emax has to be 3 in order to represent 2365")
+```
+
+50.
+```{r}
+x = 1.23456
+y = 1.23579
+
+cat("y-x is", y-x)
+cat("a) y-x contain 3 significant digits")
+cat("b) x=",x, "y=",y, "y-x=",y-x,"To represent x and y in normalized form we need emax to be at least 0. For y-x we need emin to be at least -3. Therefore the minimum exponent range we need is 3.")
+```
+
+51.
+```{r}
+cat("Largest positve non-zero number: 1+2^127 = ", 1+2^127)
+cat("Smallest positive non-zero number: +2^-24*2^-127 = ",+2^-24*2^-127)
+```
 
 52.
 ```{r}
