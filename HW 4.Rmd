@@ -1,0 +1,12 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+73-74, 77-92, 94, 97
+
+
+```{r}
+
+```
+
