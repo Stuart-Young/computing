@@ -6,7 +6,47 @@ output: html_notebook
 73-74, 77-92, 94, 97
 
 
+83.
 ```{r}
+states = state.new
+multiple_words = function(char_vec) {
+  return(length(grep(" ", char_vec)))
+}
 
+multiple_words(states)
+state.name
+```
+
+
+84.
+```{r}
+states = state.name
+states = gsub(" ","",states, ignore.case = TRUE) #don't count spaces as characters
+vowel_count = nchar(gsub("[^aeiou]","",states, ignore.case = TRUE))
+consonant_count = nchar(gsub("[aeiou]","",states, ignore.case = TRUE))
+
+sum(vowel_count > consonant_count) #number of states with more vowels than consonants
+states
+```
+
+
+85.
+```{r}
+states = state.name
+s_count = nchar(gsub("[^s]","",states, ignore.case = TRUE))
+sum(s_count > 3) #number of states with more than 3 s
+```
+
+
+86.
+```{r}
+states = state.name
+sum(grepl("[^aeiou]*[aeiou][aeiou][^aeiou]*$", states, ignore.case = TRUE))
+```
+
+87.
+```{r}
+color = colors()
+sum(grepl("red", color, ignore.case = TRUE))
 ```
 
