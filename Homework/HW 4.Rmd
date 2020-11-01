@@ -50,3 +50,32 @@ color = colors()
 sum(grepl("red", color, ignore.case = TRUE))
 ```
 
+88.
+```{r}
+text_char = function(url) {
+  text = readLines(url)
+  counts = sort(table(unlist(strsplit(text, ""), use.names=FALSE)), decreasing=FALSE)
+  return(cat("The most frequent character is", names(counts)[length(counts)], ", which appears" ,max(counts), "times."))
+  
+}     
+
+text_char("http://statmath.wu.ac.at/~hornik/index.html")
+```
+
+
+89.
+```{r}
+wc = function(url) {
+  text = readLines(url)
+  text = gsub("[[:punct:]]", " ", text, ignore.case = TRUE)
+  text = gsub("[0-9]", " ", text, ignore.case=TRUE)
+  words = strsplit(text, " ")
+  counts = sort(table(unlist(words)))
+  counts = counts[names(counts) != ""]
+  return(cat("The most frequent word is", names(counts)[length(counts)], ", which appears" ,max(counts), "times."))
+  
+}
+
+wc("http://statmath.wu.ac.at/~hornik/index.html")
+```
+
