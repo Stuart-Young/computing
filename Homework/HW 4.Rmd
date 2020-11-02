@@ -35,13 +35,17 @@ states
 states = state.name
 s_count = nchar(gsub("[^s]","",states, ignore.case = TRUE))
 sum(s_count > 3) #number of states with more than 3 s
+states
 ```
 
 
 86.
+This question is ambiguous as what constitutes a double vowel; any vowel twice, or the same vowel twice? Below is a solution to both, respectively.
 ```{r}
 states = state.name
-sum(grepl("[^aeiou]*[aeiou][aeiou][^aeiou]*$", states, ignore.case = TRUE))
+sum(grepl("[aeiou]{2}", states, ignore.case = TRUE))
+
+sum(grepl("(ee)|(aa)|(ii)|(oo)|(uu)", states, ignore.case = TRUE))
 ```
 
 87.
@@ -90,6 +94,25 @@ wc = function(url) {
 wc("http://statmath.wu.ac.at/~hornik/index.html")
 ```
 
+
+90.
+```{r}
+word_freq = function(word, url) {
+  text = readLines(url)
+  text = gsub("[[:punct:]]", " ", text, ignore.case = TRUE)
+  text = gsub("[0-9]", " ", text, ignore.case=TRUE)
+  text = tolower(text)
+  words = strsplit(text, " ")
+  counts = sort(table(unlist(words)))
+  counts = counts[names(counts) != ""]
+  return(counts[[tolower(word)]][1])
+  
+}
+
+word_freq("div","http://statmath.wu.ac.at/~hornik/index.html")
+```
+
+
 91.
 ```{r}
 numbertobinary <- function(x) {
@@ -109,19 +132,29 @@ numbertobinary(6)
 
 92.
 ```{r}
-lettersinstate <- function(x) { 
-  inputletters <- sample(letters, size = x )
-  inputstate <- sample(state.name, 1)
-  print(inputletters)
-  print(inputstate)
-  for(i in inputletters[1:x]) {
-    if(grepl(i, inputstate, ignore.case = TRUE) == F) {
-      return(FALSE)
-      break
+letters_in_state = function(letter_string) {
+  state = sample(state.name, 1)
+  letter_string_raw = as.list(strsplit(letter_string, "")[[1]])
+  print(state)
+  
+  counter = 0
+  for (i in letter_string_raw) {
+    if(grepl(i, state, ignore.case=TRUE) == TRUE) {
+      counter = counter + 1
     }
+  }
+  
+  if (counter == length(letter_string_raw)){
+    return(TRUE)
+  }
+  else {
+    return(FALSE)
   }
 }
 
 
-lettersinstate(2)
+letters_in_state("Co")
+letters_in_state("A")
+letters_in_state("u")
+
 ```
