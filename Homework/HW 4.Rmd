@@ -52,14 +52,25 @@ sum(grepl("red", color, ignore.case = TRUE))
 
 88.
 ```{r}
+#Version that considers space as a character
 text_char = function(url) {
   text = readLines(url)
   counts = sort(table(unlist(strsplit(text, ""), use.names=FALSE)), decreasing=FALSE)
   return(cat("The most frequent character is", names(counts)[length(counts)], ", which appears" ,max(counts), "times."))
-  
 }     
 
 text_char("http://statmath.wu.ac.at/~hornik/index.html")
+
+
+#Version that does not consider space as a character
+text_char_2 = function(url) {
+  text = readLines(url)
+  text = gsub(" ", "", text, ignore.case=TRUE)
+  counts = sort(table(unlist(strsplit(text, ""), use.names=FALSE)), decreasing=FALSE)
+  return(cat("The most frequent character is", names(counts)[length(counts)], ", which appears" ,max(counts), "times."))
+}
+
+text_char_2("http://statmath.wu.ac.at/~hornik/index.html")
 ```
 
 
