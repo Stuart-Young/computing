@@ -90,3 +90,38 @@ wc = function(url) {
 wc("http://statmath.wu.ac.at/~hornik/index.html")
 ```
 
+91.
+```{r}
+numbertobinary <- function(x) {
+  i <- 0
+  string <- numeric(32)
+  while(x > 0) {
+    string[32 - i] <- x %% 2
+    x <- x %/% 2
+    i <- i + 1 
+  }
+  first <- match(1, string)
+  string[first:32] 
+}
+
+numbertobinary(6)
+```
+
+92.
+```{r}
+lettersinstate <- function(x) { 
+  inputletters <- sample(letters, size = x )
+  inputstate <- sample(state.name, 1)
+  print(inputletters)
+  print(inputstate)
+  for(i in inputletters[1:x]) {
+    if(grepl(i, inputstate, ignore.case = TRUE) == F) {
+      return(FALSE)
+      break
+    }
+  }
+}
+
+
+lettersinstate(2)
+```
