@@ -151,7 +151,30 @@ text_char_2 = function(url) {
 
 text_char_2("http://statmath.wu.ac.at/~hornik/index.html")
 ```
+78.
+```{r}
+sine=function(x){
+  "we know that the sine has a periodicity of 2 pi and we can use it to reduce the number 
+  of recursions for large x and also make it more accurate as dividing x 
+  multiple times gives potential representation errors"
+  
+  x=x%%(2*pi) 
+  if(abs(x)<0.1*pi){
+    return(x)
+  }else{
+    return(3*Recall(x/3)-4*Recall(x/3)^3)
+  }
+}
+sine(pi)
+sine(4*pi)
+sine(0)
+sine(1)
+sine(1000000000)
 
+cat("
+    To implement this we need roughly log(2/0.1)/log(3)=", log(2/0.1)/log(3), "steps which means we need at most 3 steps. This translates to 2^3=8 different x values.
+    ")
+```
 
 89.
 ```{r}
@@ -232,4 +255,53 @@ letters_in_state("Co")
 letters_in_state("A")
 letters_in_state("u")
 
+```
+94
+
+```{r}
+col_prod=function(mat){
+  cols=ncol(mat)
+  products=numeric(cols)
+  for(i in 1:cols){
+    products[i]=prod(mat[,i])
+  }
+  return(products)
+}
+
+coef_from_roots=function(z){
+  if(length(z)==1){
+    return(-z)
+  }
+  n=length(z)
+  c=numeric(length(z))
+  "consider that (x-a)(x-b)(x-c)=x^3-(a+b+c)x^2+(ab+bc+ca)x-abc. 
+  we see that beta_i is the sum of the products of all possible (n-i) draws of the n roots, times (-1)^(n-i) "
+  # we calculate coefficients from n to 1 and then return reversed array
+  for(i in 1:n){
+    combinations=combn(z, i)
+    parts=col_prod(combinations)
+    c[i]=(-1)^i*sum(parts)
+  }
+  return(rev(c))
+}
+coef_from_roots(c(1, 2, 4))
+coef_from_roots(c(5))
+
+```
+
+97
+```{r}
+polyderiv=function(beta){
+  beta_deriv=beta*(seq(1:length(beta))-1)
+  return(beta_deriv[-1])
+}
+polyderiv(c(1, 1, 1, 1, 1))
+
+infl_points=function(beta){
+  return(polyroot(polyderiv(polyderiv(beta))))
+}
+infl_points(c(1, 1, 1, 1, 1))
+infl_points(c(1, 1, 1, 1))
+infl_points(c(0, 0, 0, 1))
+=
 ```
