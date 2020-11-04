@@ -6,6 +6,81 @@ output: html_notebook
 73-74, 77-92, 94, 97
 
 
+77.
+```{r}
+log_via_expansion = function(x, max_error,p_count=1){
+  p = seq(1:p_count)
+  computation = sum((-1)^(p-1)*(((x-1)^p)/p))
+  if(abs(computation-log(x))<=max_error){
+    return(c(computation,p_count))
+  }else{
+    return(Recall(x, max_error, p_count+1))
+  }
+}
+
+# How many terms in the expansion are required to calculate log(1.5) with an error of at most 10^-16?
+log_via_expansion(1.5, 1/10^16)
+
+# How many terms are required to calculate log(2) with an error of at most 10^16?
+log_via_expansion(2, 1/10^16) # not applicabale
+
+#Use the fact that log(2) = 2 log(√2) to suggest a better way of calculating log(2).
+log_via_expansion(sqrt(2), (1/10^16)/2)
+```
+
+78.
+```{r}
+
+```
+
+79.
+```{r}
+for(i in 1:10000000){
+  sum_ex79 = sum_ex79 + 1/10^i
+}
+cat(sum_ex79, "\n")
+```
+
+80.
+```{r}
+sum_ex80=0
+for(i in 0:10000000){
+  sum_ex80 = sum_ex80 + (((-1)**(i))/(i+1))
+}
+cat(sum_ex80, "\n")
+```
+
+81.
+```{r}
+result_ex81 = 0 
+for(i in 0:1000000){
+  result_ex81 = result_ex81+1/((2*(2*i+1)-1)*(2*(2*i+1)+1))
+}
+
+cat(result_ex81, "\n")
+```
+
+82.
+```{r}
+# Diclaimer I used a different version of Wallis'product -> it can be found in the following paper:
+#http://mat.uab.cat/pubmat/fitxers/download/FileType:pdf/FolderName:v50(1)/FileName:50106_01.pdf
+wallis_pi_approx <- function(n){
+  i =1
+  wallis_prod = (2*i-1)*(2*i+1)/(2*i*2*i)
+  for(i in 2:n){
+    wallis_prod = wallis_prod * (2*i-1)*(2*i+1)/(2*i*2*i)
+  }
+  return((wallis_prod**-1)*2)
+}
+
+wallis_pi_approx(1)
+wallis_pi_approx(10)
+wallis_pi_approx(100)
+wallis_pi_approx(1000)
+wallis_pi_approx(10000)
+wallis_pi_approx(100000)
+```
+
 83.
 ```{r}
 states = state.new
