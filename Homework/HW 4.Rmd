@@ -3,8 +3,23 @@ title: "R Notebook"
 output: html_notebook
 ---
 
-73-74
 
+
+74.
+#There are some problems with underflow and overflow that can occur when computing Euclidean norm:
+#Firstly, the component x_{i} of the vector can be in the machine range, however its square root might be not
+#It is possible, that the square of x_{i} can be either too small (underflow - x_{i} considered to be 0) or too large (overflow)
+# or the sum of the squared components can be too large (overflow again)
+
+#The solution could be implementing an algorithm, that firstly splits the components of the vector 'x' into 3 parts:
+  #small magnitude numbers, for which underflow might occur: x_{i}<y
+  #medium magnitude numbers, where y<=x_{i}<Y
+  #large magnitude numbers, for which x_{i}>Y
+#when y and Y are tresholds set by machine precision limits. Then, small magnitude numbers will be scaled by a scalar 'S'
+#and then their sum of squares 'unscaled' by the same 'S'. Simillarly, large magnitude numbers will be scaled by appropriate
+#'s', and then descaled again. The whole algorithm is described in 
+#'https://books.google.sk/books?id=zXnSxY9G2JgC&pg=PA42&lpg=PA42&dq=euclidean+norm+overflow&source=bl&ots=pYnBxUGXUR&sig=WBQVma59gxwhl5O9yy1dnQiBILo&hl=sk&sa=X&ved=2ahUKEwifj92mpKTeAhWC_KQKHZNtDT0Q6AEwBHoECAEQAQ#v=onepage&q&f=false
+#p.42-44
 
 77.
 ```{r}
