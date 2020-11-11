@@ -22,6 +22,131 @@ cfrac(y)
 cfrac(y)-pi
 cfrac(y)==pi
 ```
+105.
+```{r}
+contfrac<-function(x) {
+  y<-rev(x)
+  k<-length(x)
+  den<-y[1]*y[2]+1
+  nom<-y[1]
+  for (i in 3:k) {
+    aux<-den
+    den<-den*y[i]+nom
+    nom<-aux
+  }
+  print(den)
+  print(nom)
+}
 
+x<-c(4,2,6,7)
+contfrac(x)
+z<-c(3, 7, 15, 1, 292)
+contfrac(z)
+103933/33102 # Result is 3.13978
+y<-c(3, 7, 15, 1, 292, 1, 1, 1, 2, 1, 3, 1, 14, 2, 1, 1)
+contfrac(y)
+411557987/131002976 # Result is 3.141593
+```
+
+112. 
+```{r}
+factorize <- function(n) {
+  if (n<2) {return("not a composite number")}
+  res <- numeric(1)
+  pos <- 1
+  
+  while( n%%2 == 0) {
+    res[pos] <- 2
+    pos <- pos+1
+    n <- n/2
+  }
+  f <- 3
+  while(f*f <= n) {
+    if(n %% f == 0) {
+      res[pos] <- f
+      pos <- pos+1
+      n <- n/f
+    }
+    else {f <- f+2}
+  }
+  if(n != 1) {res[pos] <- n}
+  return(res)
+}
+factorize(120)
+```
+113.
+```{r}
+gcd <- function(a,b) {
+  if(b == 0) { return(a) }
+  if(a %% b == 0) { return(b) }
+  else {
+    return(gcd(b, a %% b))
+  }
+}
+
+is_prime <- function(n) {
+  if(n == 1) { return(FALSE) }
+  if(n == 2) { return(TRUE) }
+  for(i in 2:floor(sqrt(n))) {
+    if( gcd(n,i) != 1 ) { return(FALSE) }
+  }
+  return(TRUE)
+}
+
+res <- list(numeric(1))
+pos <- 1
+for(i in 2:998) {
+  if(is_prime(i) & is_prime(i+2)) {
+    res[[pos]] <- i
+    res[[pos]][2] <- i+2
+    pos <- pos+1
+  }
+}
+print(res)
+```
+
+
+
+114.
+```{r}
+fibonacci <- function(n) {
+  first <- 0
+  second <- 1
+  for(i in 0:(n-1)) {
+    second <- first + second
+    first <- second - first
+  }
+  return(first)
+}
+fibonacci(15)
+fibonacci(43)
+
+# (a) - Converging to Golden ratio
+res <- numeric(1)
+for(i in 1:30) {
+  res[i] <- fibonacci(i+1)/fibonacci(i)	
+}
+print(res)
+
+# (b) - Yes Fibonacci sequence converging to golden ratio
+golden_ratio <- (1+sqrt(5))/2
+```
+
+115.
+just to check numbers are correct:
+http://www.maths.surrey.ac.uk/hosted-sites/R.Knott/Fibonacci/fibtable.html
+```{r}
+number_of_fibonacci <- function(n) {
+  res <- numeric(1)
+  i <- 1
+  
+  while(fibonacci(i) < n) {
+    res[i] <- fibonacci(i)
+    i <- i+1
+  }
+  return(length(res))
+}
+number_of_fibonacci(1000000)
+```
 
 
