@@ -149,3 +149,230 @@ number_of_fibonacci <- function(n) {
 number_of_fibonacci(1000000)
 ```
 
+
+
+
+
+#116
+```{r}
+
+fibonacci_log <- function(n) {
+  tmp <- c(1,0)
+  n_temp <- n
+  
+  if( n %% 2 != 0) {
+    tmp <- c(tmp[1]+tmp[2],tmp[1])
+    n_temp <- n_temp - 1
+  }
+  for(i in 1:(n_temp/2)) {
+    tmp <- c(2*tmp[1]+tmp[2],tmp[1]+tmp[2])
+  }
+  
+  return(tmp[2])
+}
+
+
+
+```
+
+
+
+#117
+
+```{r}
+
+pairs <- function(n) {
+  res <- list(numeric(n*n))
+  
+  q<-1
+  for(i in 1:(n-1)) {
+    for (j in (i+1):n) {
+      res[[q]] <- c(i,j)
+      q <- q+1
+    }
+  }
+  return(res)
+}
+
+
+
+```
+
+
+#118
+
+```{r}
+
+k_tuples <- function(n,k) {
+  x <- list(1:n)
+  tmp <- expand.grid(rep(x, k)) #all possible combinations
+  check <- NULL
+  for (i in 1:nrow(tmp)){
+    for (j in 2:ncol(tmp))
+      if(tmp[i,j]>tmp[i,j-1]){
+        check[i]<-T
+      }else{
+        check[i]<-F
+        break
+      }
+  }
+  return(tmp[check,])
+}
+
+
+
+```
+
+
+#119
+```{r}
+
+josephus <- function(n) {
+  return( 2*(n-2^floor(log(n, base=2)))+1 )
+}
+josephus(24)
+
+
+```
+
+
+#120
+
+```{r}
+directpoly <- function(x,a) {
+  res <- rep(list(rep(0,1)),length(x))
+  res_1 <- numeric(1)
+  for(j in 1:length(x)) {
+    for(i in 1:length(a)) {
+      res[[j]][i] <- a[i]*(x[j])^(i-1)
+    }
+  }
+  for(i in 1:length(res)) {
+    res_1[i] <- sum(res[[i]])
+  }	
+  
+  return(res_1)
+}
+
+
+
+
+
+```
+
+
+#121
+```{r}
+
+hornerpoly <- function(x,a) {
+  res <- numeric(length(x))
+  for(j in 1:length(x)) {
+    v <- a
+    for(i in (length(a)-1):1) {
+      v[i] <- (v[i+1]*x[j]) + a[i]
+    }
+    res[j]<-v[1]
+  }
+  return(res)
+}
+
+
+```
+
+
+#122
+
+```{r}
+
+#a
+a <- system.time(directpoly(seq(-10,10, length.out=5000000),c(1, -2, 2, 3, 4, 6, 7)))
+b <- system.time(hornerpoly(seq(-10,10, length.out=5000000),c(1, -2, 2, 3, 4, 6, 7)))
+# hornerpoly is much faster
+time <- (a - b)
+
+#b
+a <- system.time(directpoly(seq(-10,10, length.out=5000000),c(-3,17,2)))
+b <- system.time(hornerpoly(seq(-10,10, length.out=5000000),c(-3,17,2)))
+# hornerpoly is faster
+time <- (a - b)
+
+```
+
+#123
+
+```{r}
+
+
+
+
+```
+
+
+#124
+
+```{r}
+count <- function(pat, str, c=0) {
+  if(regexpr(pat, str)[1] < 1) { return(c) }
+  return(count(pat,substring(str,regexpr(pat, str)[1] + nchar(pat)),c+1))
+}
+count("ab", "abab cd cdab ab ab ab ")
+
+
+```
+
+
+#125
+
+```{r}
+
+k_tuples <- function(n,k) {
+  if(n < k) { return (" n < k not permitted") }
+  if(n == k) { return ("111") }
+  
+  x <- list(0:1)
+  tmp <- expand.grid(rep(x, n))
+  u <- nrow(tmp)
+  mylist <- list()
+  res <- list()
+  p <- 1
+  
+  for(i in 1:nrow(tmp)) {
+    mylist[[i]] = as.numeric(as.vector(tmp[i,]))
+    if(sum(mylist[[i]]) == k) { 
+      res[[p]] <- mylist[[i]] 
+      p <- p+1
+    }
+  }
+  return(res)
+}
+k_tuples(3,2)
+k_tuples(2,1)
+
+
+```
+
+#126
+
+
+```{r}
+
+to_octal <- function(n) {
+  res <- numeric(floor(log(n, base=8))+1)
+  temp <- n
+  for(i in 1:length(res)) {
+    tmp <- floor( temp / (8^(floor(log(n, base=8))+1-i)) )
+    res[i] <- tmp
+    temp <- temp - tmp*(8^(floor(log(n, base=8))-i+1))
+  }
+  return(res)
+}
+to_octal(51)
+to_octal(20)
+
+
+```
+
+
+
+
+
