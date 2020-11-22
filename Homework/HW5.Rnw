@@ -12,6 +12,8 @@
 \section{Exercises 99-105, 109, 112-126}
 
 
+
+
 \textbf{100}
 <<>>=
 upper_count = function(vec) {
@@ -33,5 +35,38 @@ strrev("ABC")
 @
 
 
+\begin{center}
+ \begin{tabular}{||c c c c||} 
+ \hline
+  Year & Polling Average & Result & Error (\%)  \\ [0.5ex] 
+ \hline\hline
+ 1972 & R +24  & R +23 & 1 \\ 
+ \hline
+ 1976 & D +1 & D +2 & 1 \\
+ \hline
+ 1980 & R +2 & R +10 & 8 \\
+ \hline
+ 1984 & R +18 & R +18 & 0 \\
+ \hline
+ 1988 & R +10 & R +8 & 0 \\  
+ \hline
+ 1992 & D +7 & D +6 & 1 \\  
+ \hline
+ 1996 & D +13 & D +9 & 4 \\  
+ \hline
+ 2000 & R +4 & D +1 & 5 \\  
+ \hline
+ 2004 & R +2 & R +2 & 0 \\  
+ \hline
+ 2008 & D +7 & D +7 & 0 \\  
+ \hline
+ 2012 & D +0 & D +4 & 4 \\  
+ \hline
+ 2016 & D +4 & R +2 & 2 \\  
+ \hline
+ 2020 & D +8 & D +4 & 4 \\  
+ \hline
+\end{tabular}
+\end{center}
 
 \end{document}
