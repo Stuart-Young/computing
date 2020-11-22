@@ -1,0 +1,182 @@
+\documentclass{article}\usepackage[]{graphicx}\usepackage[]{color}
+% maxwidth is the original width if it is less than linewidth
+% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+\let\hlipl\hlkwb
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}
+\title{Computing Group 5 HW 6}
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\begin{document}
+
+\maketitle
+
+\section{126.}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{cos_fixed} \hlkwb{=} \hlkwa{function}\hlstd{(}\hlkwc{x}\hlstd{,} \hlkwc{tol}\hlstd{,} \hlkwc{i}\hlstd{=}\hlnum{0}\hlstd{)\{}
+  \hlkwa{while}\hlstd{(}\hlkwd{signif}\hlstd{(x, tol)} \hlopt{!=} \hlkwd{signif}\hlstd{(}\hlkwd{cos}\hlstd{(x), tol))\{}
+    \hlstd{x}\hlkwb{=}\hlkwd{cos}\hlstd{(x)}
+    \hlstd{i}\hlkwb{=}\hlstd{i}\hlopt{+}\hlnum{1}
+  \hlstd{\}}
+  \hlkwd{return}\hlstd{(}\hlkwd{c}\hlstd{(x,} \hlkwd{cos}\hlstd{(x), i))}
+\hlstd{\}}
+
+\hlcom{# (x, cos(x), number of iterations)}
+\hlkwd{cos_fixed}\hlstd{(}\hlnum{0.5}\hlstd{,} \hlnum{2}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1]  0.7350063  0.7418265 10.0000000
+\end{verbatim}
+\begin{alltt}
+\hlkwd{cos_fixed}\hlstd{(}\hlnum{0.5}\hlstd{,} \hlnum{3}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1]  0.7387045  0.7393415 16.0000000
+\end{verbatim}
+\begin{alltt}
+\hlkwd{cos_fixed}\hlstd{(}\hlnum{0.5}\hlstd{,} \hlnum{4}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1]  0.7391091  0.7390690 23.0000000
+\end{verbatim}
+\begin{alltt}
+\hlkwd{cos_fixed}\hlstd{(}\hlnum{0.7}\hlstd{,} \hlnum{2}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.7444212 0.7354802 5.0000000
+\end{verbatim}
+\begin{alltt}
+\hlkwd{cos_fixed}\hlstd{(}\hlnum{0.7}\hlstd{,} \hlnum{3}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1]  0.7387487  0.7393117 12.0000000
+\end{verbatim}
+\begin{alltt}
+\hlkwd{cos_fixed}\hlstd{(}\hlnum{0.7}\hlstd{,} \hlnum{4}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1]  0.7391318  0.7390537 17.0000000
+\end{verbatim}
+\begin{alltt}
+\hlkwd{cos_fixed}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{2}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1]  0.7442374  0.7356047 11.0000000
+\end{verbatim}
+\begin{alltt}
+\hlkwd{cos_fixed}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{3}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1]  0.7387603  0.7393039 18.0000000
+\end{verbatim}
+\begin{alltt}
+\hlkwd{cos_fixed}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{4}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1]  0.7391302  0.7390548 23.0000000
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+Foo
+\section{132.}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{hornerpoly} \hlkwb{<-} \hlkwa{function}\hlstd{(}\hlkwc{x}\hlstd{,}\hlkwc{a}\hlstd{) \{}
+  \hlstd{res} \hlkwb{<-} \hlkwd{numeric}\hlstd{(}\hlkwd{length}\hlstd{(x))}
+  \hlkwa{for}\hlstd{(j} \hlkwa{in} \hlnum{1}\hlopt{:}\hlkwd{length}\hlstd{(x)) \{}
+    \hlstd{v} \hlkwb{<-} \hlstd{a}
+    \hlkwa{for}\hlstd{(i} \hlkwa{in} \hlstd{(}\hlkwd{length}\hlstd{(a)}\hlopt{-}\hlnum{1}\hlstd{)}\hlopt{:}\hlnum{1}\hlstd{) \{}
+      \hlstd{v[i]} \hlkwb{<-} \hlstd{(v[i}\hlopt{+}\hlnum{1}\hlstd{]}\hlopt{*}\hlstd{x[j])} \hlopt{+} \hlstd{a[i]}
+    \hlstd{\}}
+    \hlstd{res[j]}\hlkwb{<-}\hlstd{v[}\hlnum{1}\hlstd{]}
+  \hlstd{\}}
+  \hlkwd{return}\hlstd{(res)}
+\hlstd{\}}
+
+\hlstd{polyderiv}\hlkwb{=}\hlkwa{function}\hlstd{(}\hlkwc{beta}\hlstd{)\{}
+  \hlstd{beta_deriv}\hlkwb{=}\hlstd{beta}\hlopt{*}\hlstd{(}\hlkwd{seq}\hlstd{(}\hlnum{1}\hlopt{:}\hlkwd{length}\hlstd{(beta))}\hlopt{-}\hlnum{1}\hlstd{)}
+  \hlkwd{return}\hlstd{(beta_deriv[}\hlopt{-}\hlnum{1}\hlstd{])}
+\hlstd{\}}
+
+\hlstd{newton_poly} \hlkwb{=} \hlkwa{function}\hlstd{(}\hlkwc{x}\hlstd{,} \hlkwc{beta}\hlstd{,} \hlkwc{eps}\hlstd{)\{}
+  \hlstd{counter} \hlkwb{=} \hlnum{0}
+  \hlkwa{while}\hlstd{(}\hlkwd{abs}\hlstd{(}\hlkwd{hornerpoly}\hlstd{(x, beta))}\hlopt{>}\hlstd{eps)\{}
+    \hlstd{x} \hlkwb{=} \hlstd{x}\hlopt{-}\hlkwd{hornerpoly}\hlstd{(x, beta)}\hlopt{/}\hlkwd{hornerpoly}\hlstd{(x,} \hlkwd{polyderiv}\hlstd{(beta))}
+    \hlstd{counter} \hlkwb{=} \hlstd{counter} \hlopt{+} \hlnum{1}
+  \hlstd{\}}
+  \hlkwd{return}\hlstd{(}\hlkwd{c}\hlstd{(x, counter))}
+\hlstd{\}}
+
+\hlkwd{newton_poly}\hlstd{(}\hlnum{0}\hlstd{,} \hlkwd{c}\hlstd{(}\hlnum{5}\hlstd{,} \hlnum{0.0005}\hlstd{,} \hlnum{605}\hlstd{,} \hlnum{0.0605}\hlstd{,} \hlnum{10600}\hlstd{,} \hlnum{1.06}\hlstd{,} \hlnum{10000}\hlstd{,} \hlnum{1}\hlstd{),} \hlkwc{eps}\hlstd{=}\hlnum{0.0001}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] -10000      1
+\end{verbatim}
+\begin{alltt}
+\hlcom{#The solution is found after just 1 iteration.}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+\section{136.}
+To Do
+\section{137.}
+$f(x)=1/x-y$ 
+$\Rightarrow f'(x)=-1/x^2$
+$\Rightarrow \frac{f(x)}{f'(x)}=\frac{1/x-y}{-1/x^2}=-(1/x-y)x^2=yx^2-x$ 
+$\Rightarrow x_{n+1}=x_n-(yx_n^2-x_n)=2x_n-yx_n^2$ 
+
+
+
+Applying this method iteratively will find the reciprocal of y.
+
+\end{document}
