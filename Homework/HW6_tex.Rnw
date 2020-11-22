@@ -4,6 +4,8 @@
 
 \maketitle
 
+Exercises 129, 132, 136-140, 143, 149-150, 152, 154, 156, 158-159, 163
+
 \section{126.}
 <<>>=
 cos_fixed = function(x, tol, i=0){
@@ -29,7 +31,7 @@ cos_fixed(0, 4)
 @
 
 
-Foo
+
 \section{132.}
 <<>>=
 hornerpoly <- function(x,a) {
@@ -66,13 +68,48 @@ newton_poly(0, c(5, 0.0005, 605, 0.0605, 10600, 1.06, 10000, 1), eps=0.0001)
 \section{136.}
 To Do
 \section{137.}
-$f(x)=1/x-y$ 
-$\Rightarrow f'(x)=-1/x^2$
-$\Rightarrow \frac{f(x)}{f'(x)}=\frac{1/x-y}{-1/x^2}=-(1/x-y)x^2=yx^2-x$ 
-$\Rightarrow x_{n+1}=x_n-(yx_n^2-x_n)=2x_n-yx_n^2$ 
-
-
+$$f(x)=1/x-y$$ 
+$$\Rightarrow f'(x)=-1/x^2$$
+$$\Rightarrow \frac{f(x)}{f'(x)}=\frac{1/x-y}{-1/x^2}=-(1/x-y)x^2=yx^2-x$$ 
+$$\Rightarrow x_{n+1}=x_n-(yx_n^2-x_n)=2x_n-yx_n^2$$ 
 
 Applying this method iteratively will find the reciprocal of y.
+
+
+\section{138.}
+$$x_{k+1}=x_k-f(x_k)\frac{x_k-x_{k-1}}{f(x_k)-f(x_{k-1})} $$
+  $$=\frac{x_k(f(x_k)-f(x_{k-1}))-f(x_k)(x_k-x_{k-1})}{f(x_k)-f(x_{k-1})}$$
+  $$=\frac{f(x_k)x_k-f(x_{k-1})x_k-f(x_k)x_k+f(x_k)x_{k-1}}{f(x_k)-f(x_{k-1})}$$
+  $$=\frac{x_{k-1}f(x_k)-x_kf(x_{k-1})}{f(x_K)-f(x_{k-1})} $$
+
+For $x_k\approx x_{k-1}$, the iterative method may have representation errors, whereas the secant method would not.
+
+\section{139.}
+  $$ x_1-1=0 $$
+  $$ x_1x_2-1=0 \iff x_1x_2=1 \iff x_2=\frac{1}{x_1} $$
+  $$f(x)=\frac{1}{x} $$
+  $$f'(x)=-\frac{1}{x^2} $$
+  $$x_2=x_1-\frac{f(x_1)}{f'(x_1)}=x_1+\frac{\frac{1}{x_1}}{\frac{1}{x_1^2}}=x_1+\frac{x_1^2}{x_1}=2x_1 $$
+
+If we start with any ordered pair where $x_1=0$, $x_2$ will always be 0 after any number of iterations. Therefore, we won't reach the solution $(1,1)$.
+
+\section{140.}
+<<>>=
+curve(sin(10*x)-x, ylab="y", from=-1, to=1)
+
+f=function(x) sin(10*x)-x
+
+roots = numeric(7)
+roots[1] = uniroot(f, c(-0.9, -0.8))$root
+roots[2] = uniroot(f, c(-0.75, -0.65))$root
+roots[3] = uniroot(f, c(-0.35, -0.25))$root
+roots[4] = uniroot(f, c(-0.01, 0.01))$root
+roots[5] = uniroot(f, c(0.25, 0.35))$root
+roots[6] = uniroot(f, c(0.65, 0.75))$root
+roots[7] = uniroot(f, c(0.8, 0.9))$root
+
+roots
+@
+
 
 \end{document}
