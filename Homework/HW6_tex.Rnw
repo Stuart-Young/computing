@@ -6,7 +6,7 @@
 
 Exercises 129, 132, 136-140, 143, 149-150, 152, 154, 156, 158-159, 163
 
-\section{126.}
+\section{129.}
 <<>>=
 cos_fixed = function(x, tol, i=0){
   while(signif(x, tol) != signif(cos(x), tol)){
@@ -66,7 +66,81 @@ newton_poly(0, c(5, 0.0005, 605, 0.0605, 10600, 1.06, 10000, 1), eps=0.0001)
 @
 
 \section{136.}
-To Do
+<<>>=
+a)
+\begin{multline}
+\\
+  f(x)=x^2-a \\
+  \Rightarrow f'(x)=2x \\
+  \Rightarrow \frac{f(x)}{f'(x)}=\frac{x^2-a}{2x}=\frac{x}{2}-\frac{a}{2x} \\
+  \Rightarrow x_{n+1}=x_n-\frac{x_n}{2}+\frac{a}{2x_n}=\frac{x_n}{2}+\frac{a}{2x_n} \\
+\end{multline}
+
+b)
+\begin{multline}
+\\
+  x_{k+1}^2-a=\left(\frac{x_k}{2}+\frac{a}{2x_k}\right)^2-a \\
+  =\frac{x_k^2}{4}+\frac{a}{2}+\frac{a^2}{4x_k^2}-a \\
+  =\frac{x_k^2}{4}-\frac{a}{2}+\frac{a^2}{4x_k^2} \\
+  =\frac{x_k^4}{4x_k^2}-\frac{2ax_k^2}{4x_k^2}+\frac{a^2}{4x_k^2} \\
+  =\frac{x_k^4-2ax_k^2+a^2}{4x_k^2} \\
+  =\frac{(x_k^2-a)^2}{(2x_k)^2} \\
+  =\left(\frac{x_k^2-a}{2x_k}\right)^2 
+\\
+\end{multline}
+Since the term on the right is a squared one and $x_k$ is not already the solutions we are seeking, we know it must be bigger than 0.
+\begin{multline}
+\\
+  x_{k+1}^2-a > 0 \\
+  \Rightarrow x_k^2-a > 0 \\
+  \Rightarrow x_k^2 > a \\
+  \Rightarrow x_k > \sqrt{a}
+\\
+\end{multline}
+
+c)
+From a) we know that
+$$x_{n+1}=\frac{x_k}{2}+\frac{a}{2x_k}=\frac{x_k^2+a}{2x_k}$$
+
+since we also know that $x_k > \sqrt{a}$ from b) it follows
+$$x_{k+1}=\frac{x_k^2+a}{2x_k}<\frac{x_k^2+x_k^2}{2xk}=\frac{2x_k^2}{2x_k}=x_k$$
+
+d)
+\begin{multline}
+\\
+  e_k=\sqrt{a}-x_k \\
+  r_k=\frac{e_k}{\sqrt{a}} \\
+\\
+  e_{k+1}=\sqrt{a}-x_{k+1}=\sqrt{a}-\frac{x_k^2+a}{2x_k}=\frac{-x_k^2+2x_k\sqrt{a}-a}{2x_k} \\
+  =\frac{-(x_k^2-2x_k\sqrt{a}+a)}{2x_k}=\frac{-e_k}{2x_k} \\
+\\
+  r_{k+1}=\frac{e_{k+1}}{\sqrt{a}}=\frac{-e_k^2}{2x_k\sqrt{a}}=\frac{-e_k^2\sqrt{a}}{2x_ka}=-\frac{\sqrt{a}}{2x_k}\cdot\frac{e_k^2}{\sqrt{a}^2}=-\frac{\sqrt{a}}{2x_k}r_k^2
+\\
+\end{multline}
+
+e)
+\begin{multline}
+\\
+  |r_4|=\frac{\sqrt{a}}{2x_3}r_3^2=\frac{\sqrt{a}}{2x_3}\left(\frac{\sqrt{a}}{2x_2}r_2^2\right)^2 \\
+  =\frac{\sqrt{a}\cdot a}{2x_3\cdot4x_2^2}\left(\frac{\sqrt{a}}{2x_1}r_1^2\right)^4 \\
+  =\frac{\sqrt{a}\cdot a \cdot a^2}{2x_3 \cdot 4x_2^2 \cdot 16 x_1^4}\cdot\left(\frac{\sqrt{a}}{2x_0}r_0^2\right)^8 \\
+  =\frac{
+    \sqrt{a} \cdot a \cdot a^2 \cdot a^4
+  }{
+    2x_3 \cdot 4x_2^2 \cdot 16x_1^4 \cdot 256x_0^8 
+  }\cdot{r_0^{16}}\\
+  \\
+  x_k \geq \sqrt{a} \\
+  \Rightarrow |r_4|\leq\frac{\sqrt{a} \cdot a \cdot a^2 \cdot a^4}{32768 \cdot \sqrt{a} \cdot a \cdot a^2 \cdot a^4}r_0^{16}=\frac{r_0^{16}}{32768} \\
+  \\
+  |r_0|\leq 0.1 \\
+  \Rightarrow |r_4|\leq\frac{1}{32768 \cdot 10^{16}}
+\\
+\end{multline}
+
+@
+
+
 \section{137.}
 $$f(x)=1/x-y$$ 
 $$\Rightarrow f'(x)=-1/x^2$$
@@ -111,5 +185,161 @@ roots[7] = uniroot(f, c(0.8, 0.9))$root
 roots
 @
 
+
+\section.{143}
+<<>>=
+  f=function(x) (x-3)^4+7*(x-2)^2+x
+  curve(f, from=0, to=5)
+  optim(2, f)
+  "2.121948 minimises the function"
+@
+
+
+\section.{149}
+<<>>=
+if(FALSE){
+"a)"
+quad_approx_a=function(x){
+  while(abs(cos(x)-x)>=.01){
+    f_n=cos(x)-x
+    fp_n=-sin(x)-1
+    fpp_n=-cos(x)
+    A=-1/2*fpp_n
+    B=fp_n-x*fp_n
+    C=f_n-x*fp_n-1/2*x^2*fpp_n
+    if(is.na(A) | is.na(B)| is.na(c)){
+      candidate=numeric(2)
+      candidate[1]=(B+sqrt(B^2-4*A*C))/(2*A)
+      candidate[2]=(B-sqrt(B^2-4*A*C))/(2*A)
+      if(!is.na(candidate[1]) & !is.na(candidate[2])){
+        x=candidate[which.min(abs(candidate-x))] 
+      }else{
+        x=(fp_n-x*fpp_n)/fpp_n
+      }
+    }else{
+      x=(fp_n-x*fpp_n)/fpp_n
+    }
+  }
+  return(x)
+}
+quad_approx_a(1)
+quad_approx_a(3)
+quad_approx_a(6)
+
+"b)"
+quad_approx_b=function(x){
+  while(abs(x^3-x-3)>=.01){
+    f_n=x^3-x-3
+    fp_n=3*x^2-1
+    fpp_n=6*x
+    A=-1/2*fpp_n
+    B=fp_n-x*fp_n
+    C=f_n-x*fp_n-1/2*x^2*fpp_n
+    if(is.na(A) | is.na(B)| is.na(c)){
+      candidate=numeric(2)
+      candidate[1]=(B+sqrt(B^2-4*A*C))/(2*A)
+      candidate[2]=(B-sqrt(B^2-4*A*C))/(2*A)
+      if(is.na(candidate[1]) | is.na(candidate[2])){
+        x=candidate[which.min(abs(candidate-x))] 
+      }else{
+        x=(fp_n-x*fpp_n)/fpp_n
+      }
+    }else{
+      x=(fp_n-x*fpp_n)/fpp_n
+    }
+    #cat(x, A, B, C, "\n")
+  }
+  return(x)
+}
+quad_approx_b(0)
+
+"c)"
+quad_approx_c=function(x){
+  while(abs(x^3-x-3)>=.01){
+    f_n=x^3-x-3
+    fp_n=3*x^2-1
+    fpp_n=6*x
+    A=-1/2*fpp_n
+    B=fp_n-x*fp_n
+    C=f_n-x*fp_n-1/2*x^2*fpp_n
+    if(is.na(A) | is.na(B)| is.na(c)){
+      candidate=numeric(2)
+      candidate[1]=(B+sqrt(B^2-4*A*C))/(2*A)
+      candidate[2]=(B-sqrt(B^2-4*A*C))/(2*A)
+      if(is.na(candidate[1]) | is.na(candidate[2])){
+        x=candidate[which.min(abs(candidate-x))] 
+      }else{
+        x=(fp_n-x*fpp_n)/fpp_n
+      }
+    }else{
+      x=(fp_n-x*fpp_n)/fpp_n
+    }
+    #cat(x, A, B, C, "\n")
+  }
+  return(x)
+}
+quad_approx_c(0)
+}
+@
+
+\section.{150}
+<<>>=
+"a)"
+half_int=function(f, a, b, tau){
+  if(f(a)*f(b)>0){
+    cat("Please specify an valid interval.")
+    return(NA)
+  }
+  while(abs(a-b)>tau){
+    x=(a+b)/2
+    if(sign(f(x))==sign(f(a))){
+      a=x
+    }else if(sign(f(x))==sign(f(b))){
+      b=x
+    }else if(f(x)==0){
+      cat("Congratulations, you found the root! \n")
+      return(c(x ,x))
+    }
+  }
+  return(c(a, b))
+}
+half_int(sin, 2, 4, .00000000001)
+"We can get arbitrarily close to pi"
+
+"b)"
+f_n=function(x, n=30){
+  k=seq(0, n)
+  s=(-1)^k*x^(2*k+1)/factorial(2*k+1)
+  return(sum(s))
+}
+
+f=function(x) f_n(x, 5)
+f=Vectorize(f)
+f_seq=f(seq(0, 7, length=100))
+plot(f_seq, type="l")
+
+f=function(x) f_n(x, 10)
+f=Vectorize(f)
+f_seq=f(seq(0, 7, length=100))
+plot(f_seq, type="l")
+
+f=function(x) f_n(x, 20)
+f=Vectorize(f)
+f_seq=f(seq(0, 7, length=100))
+plot(f_seq, type="l")
+
+f=function(x) f_n(x, 40)
+f=Vectorize(f)
+f_seq=f(seq(0, 7, length=100))
+plot(f_seq, type="l")
+
+"c)"
+f=function(x) abs(f_n(x, 100))
+optim(3, f)
+"We can evluate pi up to 6 digits, yes. There are multiple series that converge to pi 
+(or a multiple thereof) rather quickly and are computationally easier to evaluate, 
+for example the Leibnitz formula."
+```
+@
 
 \end{document}
